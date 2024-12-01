@@ -8,14 +8,21 @@
 
 struct my_egress_headers_t {
     ethernet_h              ethernet;
-    stream_nonce_t          stream_nonce_t;
+    stream_nonce_t          stream_nonce;
     stream_round_t          stream_round;
+    // QR 1, 3, 5 or 7 Deparser
+    temp_t                  temp;
+    vector_t                qr_a;
+    vector_t                qr_b;
+    vector_t                qr_c;
+    vector_t                qr_d;
     stream_state_t          stream_state;
 }
 
     /********  G L O B A L   E G R E S S   M E T A D A T A  *********/
 
 struct my_egress_metadata_t {
+    hashword_t key3;
 }
 
     /***********************  P A R S E R  **************************/
@@ -34,6 +41,8 @@ control Egress(
     inout egress_intrinsic_metadata_for_deparser_t     eg_dprsr_md,
     inout egress_intrinsic_metadata_for_output_port_t  eg_oport_md)
 {
+
+    Hash<bit<32>>(HashAlgorithm_t.IDENTITY) copy32_0;
     #include "includes/act_stream_eg_qr1.p4"
     #include "includes/act_stream_eg_qr3.p4"
     #include "includes/act_stream_eg_qr5.p4"

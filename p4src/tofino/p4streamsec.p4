@@ -5,7 +5,10 @@
 
 const PortId_t CPU_PORT = 64;
 
-typedef bit<32>  hashword_t;
+typedef bit<32>     hashword_t;
+typedef bit<96>     jumpc_t;
+typedef bit<128>    jumpd_t;
+
 //consts Forro
 const hashword_t FORRO_C0 = 0x746c6f76;
 const hashword_t FORRO_C1 = 0x61616461;

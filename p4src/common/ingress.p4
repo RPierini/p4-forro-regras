@@ -10,6 +10,48 @@ struct my_ingress_headers_t {
     ethernet_h              ethernet;
     stream_nonce_t          stream_nonce;
     stream_round_t          stream_round;
+    // QR 0 (Odd to Even rounds) Deparser
+    vector_t                qr0_x3;
+    vector_t                qr0_x0;
+    vector_t                qr0_x10;
+    vector_t                qr0_x8;
+    vector_t                qr0_x6;
+    vector_t                qr0_x4;
+    vector_t                qr0_x1;
+    vector_t                qr0_x11;
+    vector_t                qr0_x9;
+    vector_t                qr0_x7;
+    vector_t                qr0_x5;
+    vector_t                qr0_x2;
+    vector_t                qr0_a;
+    vector_t                qr0_d;
+    vector_t                qr0_c;
+    vector_t                qr0_b;
+    // QR 2 or 6 Deparser
+    temp_t                  temp;
+    vector_t                qr26_a;
+    vector_t                qr26_b;
+    vector_t                qr26_c;
+    vector_t                qr26_d;
+    // QR 4 (Even to Odd rounds) Deparser
+    vector_t                qr4_x3;
+    vector_t                qr4_x7;
+    vector_t                qr4_x11;
+    vector_t                qr4_x2;
+    vector_t                qr4_x6;
+    vector_t                qr4_x10;
+    vector_t                qr4_x1;
+    vector_t                qr4_x5;
+    vector_t                qr4_x9;
+    vector_t                qr4_x0;
+    vector_t                qr4_x4;
+    vector_t                qr4_x8;
+    vector_t                qr4_a;
+    vector_t                qr4_b;
+    vector_t                qr4_c;
+    vector_t                qr4_d;
+
+    // Init, Fin and Payload.
     stream_state_t          stream_state;
     stream_cipher_t         stream_cipher;
     stream_payload_t        stream_payload;
@@ -18,15 +60,8 @@ struct my_ingress_headers_t {
     /******  G L O B A L   I N G R E S S   M E T A D A T A  *********/
 
 struct my_ingress_metadata_t {
-    hashword_t  key0;
-    hashword_t  key1;
-    hashword_t  key2;
-    hashword_t  key3;
-    hashword_t  key4;
-    hashword_t  key5;
-    hashword_t  key6;
-    hashword_t  key7;
     bit<1>      fin;
+    bit<3>      relative_qr;
 }
 
     /***********************  P A R S E R  **************************/
@@ -54,14 +89,12 @@ control Ingress(
     #include "includes/act_stream_ig_qr4.p4"
     #include "includes/act_stream_ig_qr6.p4"
     #include "includes/tbl_stream_ig.p4"
+    #include "includes/tbl_stream_finit.p4"
 
     apply {
         if (!hdr.stream_round.isValid() || meta.fin == 1) {
             tbl_stream_ig0_finit.apply();
             tbl_stream_ig1_finit.apply();
-            tbl_stream_ig2_finit.apply();
-            tbl_stream_ig3_finit.apply();
-            tbl_stream_ig4_finit.apply();
         } else {
             tbl_stream_ig0.apply();
             tbl_stream_ig1.apply();

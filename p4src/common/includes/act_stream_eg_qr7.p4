@@ -49,5 +49,6 @@ action e11_qr7() {
 
 action e11_qr7_fin() {
    hdr.stream_state.v3 = hdr.stream_state.v3[23:0] ++ hdr.stream_state.v3[31:24];
+
    hdr.stream_round.round = hdr.stream_round.round + 128;
 }

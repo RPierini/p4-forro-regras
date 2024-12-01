@@ -27,6 +27,16 @@ header stream_state_t {
     hashword_t  v15; //c3
 }
 
+// Used for rotation
+header temp_t {
+    bit<384> v; // skip 384 bits
+}
+
+// each hashword from the state vector
+header vector_t {
+    hashword_t v;
+}
+
 header stream_cipher_t {
     hashword_t  v0;
     hashword_t  v1;

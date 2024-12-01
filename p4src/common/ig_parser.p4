@@ -15,14 +15,6 @@ parser IngressParser(packet_in        pkt,
     }
 
     state parse_init_metadata {
-        meta.key0 = 0x0;
-        meta.key1 = 0x0;
-        meta.key2 = 0x0;
-        meta.key3 = 0x0;
-        meta.key4 = 0x0;
-        meta.key5 = 0x0;
-        meta.key6 = 0x0;
-        meta.key7 = 0x0;
         meta.fin = 0x0;
         transition parse_ethernet;
     }
