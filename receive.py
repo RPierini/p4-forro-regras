@@ -14,6 +14,16 @@ from scapy.all import (
 
 from forro_class import ForroState, ForroPayload
 
+#Inverte o Endianess
+def swap32(valor):
+    chunks_invertidos = []
+    for i in range(0, len(valor), 4):
+        chunk = valor[i:i+4]
+        chunk_invertido = chunk[::-1]
+        chunks_invertidos.append(chunk_invertido)
+
+    return b''.join(chunks_invertidos)
+
 def get_if():
     ifs=get_if_list()
     iface=None
@@ -31,6 +41,7 @@ def handle_pkt(pkt):
         print("got a packet")
         pkt.show()
         hexdump(pkt)
+        print(swap32(pkt[ForroPayload].d0))
         sys.stdout.flush()
 
 

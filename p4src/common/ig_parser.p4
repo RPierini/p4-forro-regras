@@ -5,27 +5,36 @@ parser IngressParser(packet_in        pkt,
     /* Intrinsic */
     out ingress_intrinsic_metadata_t  ig_intr_md)
 {
-    #include "includes/prs_forro_ig.p4"
+    #include "includes/prs_stream_ig.p4"
 
     /* This is a mandatory state, required by Tofino Architecture */
     state start {
         pkt.extract(ig_intr_md);
         pkt.advance(PORT_METADATA_SIZE);
-        transition parse_ethernet;
+        transition parse_init_metadata;
     }
 
-    state parse_drop {
-        meta.rodada = 0xFF;
-        transition accept;
+    state parse_init_metadata {
+        meta.key0 = 0x0;
+        meta.key1 = 0x0;
+        meta.key2 = 0x0;
+        meta.key3 = 0x0;
+        meta.key4 = 0x0;
+        meta.key5 = 0x0;
+        meta.key6 = 0x0;
+        meta.key7 = 0x0;
+        meta.fin = 0x0;
+        transition parse_ethernet;
     }
 
     state parse_ethernet {
         pkt.extract(hdr.ethernet);
-        meta.rodada = 0x0;
         transition select(hdr.ethernet.ether_type) {
-            ether_type_t.FORRO:   parse_forro_rodada;
-            ether_type_t.IPV6:    parse_drop;
-            default: parse_forro_payload;
+            ether_type_t.FORRO_FINIT:   parse_stream_nonce;
+            ether_type_t.CHACHA_FINIT:  parse_stream_nonce;
+            ether_type_t.FORRO_CALC:    parse_stream_nonce;
+            ether_type_t.CHACHA_CALC:   parse_stream_nonce;
+            default: accept;
         }
     }
 }

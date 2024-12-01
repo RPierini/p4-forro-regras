@@ -5,7 +5,7 @@ parser EgressParser(packet_in        pkt,
     /* Intrinsic */
     out egress_intrinsic_metadata_t  eg_intr_md)
 {
-    #include "includes/prs_forro_eg.p4"
+    #include "includes/prs_stream_eg.p4"
 
     /* This is a mandatory state, required by Tofino Architecture */
     state start {
@@ -16,7 +16,8 @@ parser EgressParser(packet_in        pkt,
     state parse_ethernet {
         pkt.extract(hdr.ethernet);
         transition select(hdr.ethernet.ether_type) {
-            ether_type_t.FORRO:   parse_forro_rodada;
+            ether_type_t.FORRO_CALC:    parse_stream_round;
+            ether_type_t.CHACHA_CALC:   parse_stream_round;
             default: accept;
         }
     }
