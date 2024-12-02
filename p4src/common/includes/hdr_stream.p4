@@ -28,8 +28,12 @@ header stream_state_t {
 }
 
 // Used for rotation
-header temp_t {
-    bit<384> v; // skip 384 bits
+header temp1_t {
+    bit<256> v; // skip 256 bits
+}
+
+header temp2_t {
+    bit<96> v; // skip 96 bits
 }
 
 // each hashword from the state vector

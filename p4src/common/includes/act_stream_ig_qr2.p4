@@ -1,49 +1,49 @@
 action i0_qr2() {
-   hdr.stream_state.v14 = hdr.stream_state.v14 + hdr.stream_state.v1;
+   hdr.qr26_d.v = hdr.qr26_d.v + hdr.qr26_e.v;
 }
 
 action i1_qr2() {
-   hdr.stream_state.v10 = hdr.stream_state.v10 ^ hdr.stream_state.v14;
+   hdr.qr26_c.v = hdr.qr26_c.v ^ hdr.qr26_d.v;
 }
 
 action i2_qr2() {
-   hdr.stream_state.v6 = hdr.stream_state.v6 + hdr.stream_state.v10;
+   hdr.qr26_b.v = hdr.qr26_b.v + hdr.qr26_c.v;
 }
 
 action i3_qr2() {
-   hdr.stream_state.v6 = hdr.stream_state.v6[21:0] ++ hdr.stream_state.v6[31:22];
+   hdr.qr26_b.v = hdr.qr26_b.v[21:0] ++ hdr.qr26_b.v[31:22];
 }
 
 action i4_qr2() {
-   hdr.stream_state.v2 = hdr.stream_state.v2 + hdr.stream_state.v6;
+   hdr.qr26_a.v = hdr.qr26_a.v + hdr.qr26_b.v;
 }
 
 action i5_qr2() {
-   hdr.stream_state.v1 = hdr.stream_state.v1 ^ hdr.stream_state.v2;
+   hdr.qr26_e.v = hdr.qr26_e.v ^ hdr.qr26_a.v;
 }
 
 action i6_qr2() {
-   hdr.stream_state.v14 = hdr.stream_state.v14 + hdr.stream_state.v1;
+   hdr.qr26_d.v = hdr.qr26_d.v + hdr.qr26_e.v;
 }
 
 action i7_qr2() {
-   hdr.stream_state.v14 = hdr.stream_state.v14[4:0] ++ hdr.stream_state.v14[31:5];
+   hdr.qr26_d.v = hdr.qr26_d.v[4:0] ++ hdr.qr26_d.v[31:5];
 }
 
 action i8_qr2() {
-   hdr.stream_state.v10 = hdr.stream_state.v10 + hdr.stream_state.v14;
+   hdr.qr26_c.v = hdr.qr26_c.v + hdr.qr26_d.v;
 }
 
 action i9_qr2() {
-   hdr.stream_state.v6 = hdr.stream_state.v6 ^ hdr.stream_state.v10;
+   hdr.qr26_b.v = hdr.qr26_b.v ^ hdr.qr26_c.v;
 }
 
 action i10_qr2() {
-   hdr.stream_state.v2 = hdr.stream_state.v2 + hdr.stream_state.v6;
+   hdr.qr26_a.v = hdr.qr26_a.v + hdr.qr26_b.v;
 }
 
 action i11_qr2() {
-   hdr.stream_state.v2 = hdr.stream_state.v2[23:0] ++ hdr.stream_state.v2[31:24];
+   hdr.qr26_a.v = hdr.qr26_a.v[23:0] ++ hdr.qr26_a.v[31:24];
 
    hdr.stream_round.round = hdr.stream_round.round + 1;
    ig_tm_md.ucast_egress_port=68+128;

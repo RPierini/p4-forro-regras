@@ -1,8 +1,7 @@
 state parse_stream_nonce {
     pkt.extract(hdr.stream_nonce);
     transition select(hdr.ethernet.ether_type) {
-        ether_type_t.FORRO_CALC:    parse_stream_round;
-        ether_type_t.CHACHA_CALC:   parse_stream_round;
+        ether_type_t.STREAM_CALC:   parse_stream_round;
         default: accept;
     }
 }
@@ -34,10 +33,10 @@ state parse_qr_odd_to_even {
     pkt.extract(hdr.qr0_x7);
     pkt.extract(hdr.qr0_c);
     pkt.extract(hdr.qr0_x8);
-    pkt.extract(hdr.qr0_x9);
+    pkt.extract(hdr.qr0_e);
     pkt.extract(hdr.qr0_b);
+    pkt.extract(hdr.qr0_x9);
     pkt.extract(hdr.qr0_x10);
-    pkt.extract(hdr.qr0_x11);
     transition accept;
 }
 
@@ -46,7 +45,9 @@ state parse_qr {
     pkt.extract(hdr.qr26_b);
     pkt.extract(hdr.qr26_c);
     pkt.extract(hdr.qr26_d);
-    pkt.extract(hdr.temp); //temporary 384bits hold for rotating
+    pkt.extract(hdr.temp1); //temporary 256bits hold for rotating
+    pkt.extract(hdr.qr26_e);
+    pkt.extract(hdr.temp2); //temporary 96bits hold for rotating
     transition accept;
 }
 
@@ -63,17 +64,12 @@ state parse_qr_even_to_odd {
     pkt.extract(hdr.qr4_x7);
     pkt.extract(hdr.qr4_c);
     pkt.extract(hdr.qr4_x8);
+    pkt.extract(hdr.qr4_e);
     pkt.extract(hdr.qr4_x9);
     pkt.extract(hdr.qr4_x10);
-    pkt.extract(hdr.qr4_x11);
     pkt.extract(hdr.qr4_d);
     transition accept;
 }
-
-// state parse_stream_state {
-//     pkt.extract(hdr.stream_state);
-//     transition accept;
-// }
 
 state parse_stream_cipher_payload {
     pkt.extract(hdr.stream_cipher);

@@ -22,10 +22,8 @@ parser IngressParser(packet_in        pkt,
     state parse_ethernet {
         pkt.extract(hdr.ethernet);
         transition select(hdr.ethernet.ether_type) {
-            ether_type_t.FORRO_FINIT:   parse_stream_nonce;
-            ether_type_t.CHACHA_FINIT:  parse_stream_nonce;
-            ether_type_t.FORRO_CALC:    parse_stream_nonce;
-            ether_type_t.CHACHA_CALC:   parse_stream_nonce;
+            ether_type_t.STREAM_INIT:   parse_stream_nonce;
+            ether_type_t.STREAM_CALC:    parse_stream_nonce;
             default: accept;
         }
     }

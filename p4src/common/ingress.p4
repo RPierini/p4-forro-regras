@@ -13,22 +13,24 @@ struct my_ingress_headers_t {
     // QR 0 (Odd to Even rounds) Deparser
     vector_t                qr0_x3;
     vector_t                qr0_x0;
-    vector_t                qr0_x10;
+    vector_t                qr0_x9;
     vector_t                qr0_x8;
     vector_t                qr0_x6;
     vector_t                qr0_x4;
     vector_t                qr0_x1;
-    vector_t                qr0_x11;
-    vector_t                qr0_x9;
+    vector_t                qr0_x10;
+    vector_t                qr0_e;
     vector_t                qr0_x7;
     vector_t                qr0_x5;
     vector_t                qr0_x2;
     vector_t                qr0_a;
-    vector_t                qr0_d;
-    vector_t                qr0_c;
     vector_t                qr0_b;
+    vector_t                qr0_c;
+    vector_t                qr0_d;
     // QR 2 or 6 Deparser
-    temp_t                  temp;
+    temp1_t                 temp1;
+    vector_t                qr26_e;
+    temp2_t                 temp2;
     vector_t                qr26_a;
     vector_t                qr26_b;
     vector_t                qr26_c;
@@ -36,13 +38,13 @@ struct my_ingress_headers_t {
     // QR 4 (Even to Odd rounds) Deparser
     vector_t                qr4_x3;
     vector_t                qr4_x7;
-    vector_t                qr4_x11;
+    vector_t                qr4_x10;
     vector_t                qr4_x2;
     vector_t                qr4_x6;
-    vector_t                qr4_x10;
+    vector_t                qr4_x9;
     vector_t                qr4_x1;
     vector_t                qr4_x5;
-    vector_t                qr4_x9;
+    vector_t                qr4_e;
     vector_t                qr4_x0;
     vector_t                qr4_x4;
     vector_t                qr4_x8;
@@ -51,8 +53,7 @@ struct my_ingress_headers_t {
     vector_t                qr4_c;
     vector_t                qr4_d;
 
-    // Init, Fin and Payload.
-    stream_state_t          stream_state;
+    // Init/Fin and Payload.
     stream_cipher_t         stream_cipher;
     stream_payload_t        stream_payload;
 }
@@ -80,8 +81,8 @@ control Ingress(
     inout ingress_intrinsic_metadata_for_tm_t        ig_tm_md)
 {
 
-    Hash<bit<32>>(HashAlgorithm_t.IDENTITY) copy32_0;
-    Hash<bit<32>>(HashAlgorithm_t.IDENTITY) copy32_1;
+    // Hash<bit<32>>(HashAlgorithm_t.IDENTITY) copy32_0;
+    // Hash<bit<32>>(HashAlgorithm_t.IDENTITY) copy32_1;
     #include "includes/act_utils.p4"
     #include "includes/act_stream_ig_finit.p4"
     #include "includes/act_stream_ig_qr0.p4"
