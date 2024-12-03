@@ -43,20 +43,21 @@ def padding(msg, tamanho):
     return mensagem_com_pad
 
 def main():
-    if len(sys.argv)<2:
-        print('pass 4 arguments: destination "<nonce>" "<key>" "<message>"')
+    if len(sys.argv)<4:
+        print('pass 4 arguments: destination "<nonce>" "<message>"')
         exit(1)
 
     #Carregando argumentos, ja invertendo o Endianess do nonce, key e mensagem
     addr = socket.gethostbyname(sys.argv[1])
-    payload = swap32(padding(sys.argv[2], 64))
+    nonce = swap32(padding(sys.argv[2], 8))
+    payload = swap32(padding(sys.argv[3], 64))
     iface = get_if()
     
     print(payload)
 
     print("sending on interface %s to %s" % (iface, str(addr)))
     pkt =  Ether(src=get_if_hwaddr(iface), dst='08:00:00:00:01:02', type=0xABCD)
-    pkt = pkt / payload
+    pkt = pkt / nonce / payload
     sendp(pkt, iface=iface, verbose=False)
 
 

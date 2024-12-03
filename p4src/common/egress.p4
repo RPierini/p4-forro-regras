@@ -13,7 +13,7 @@ struct my_egress_headers_t {
     // QR 1, 3, 5 or 7 Deparser
     temp1_t                 temp1;
     vector_t                qr_e;
-    temp1_t                 temp2;
+    temp2_t                 temp2;
     vector_t                qr_a;
     vector_t                qr_b;
     vector_t                qr_c;

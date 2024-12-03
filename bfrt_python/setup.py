@@ -1,5 +1,5 @@
 #Versão do Forro
-forro = 2
+forro = 8
 #Total rounds (ou total de travessias)
 total_rounds = (forro * 4)
 #Portas de entrada e saida
