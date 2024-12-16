@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-cd ~/bf-sde-9.9.0; . ~/tools/set_sde.bash; sde
+cd ~/bf-sde-9.13.2; . ~/tools/set_sde.bash; sde
 
 function p4_build {
-    ~/tools/p4_build.sh ~/p4-forro-clean/p4src/tofino/p4_forro.p4
+    ~/tools/p4_build.sh ~/ReGrAS/p4-forro-regras/p4src/tofino/p4_forro.p4
 }
 
 #Start the topology
@@ -17,7 +17,7 @@ function topo_start {
     sleep 5
     screen -dm -S "bf_switchd" ./run_switchd.sh -p p4_forro --arch tofino
     sleep 5
-    screen -dm -S "bfshell" ./run_bfshell.sh -b ~/p4-forro-clean/bfrt_python/setup.py -i
+    screen -dm -S "bfshell" ./run_bfshell.sh -b ~/ReGrAS/p4-forro-regras/bfrt_python/setup.py -i
     sleep 5
 
     sudo ip netns add h1
