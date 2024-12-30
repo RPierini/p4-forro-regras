@@ -43,30 +43,31 @@ action i0_add_values_forro(
 }
 
 action i1_cipher () {
+   // Inserting the values as if it was the end of a QR7 (so it's swapped "odd to even" on QR0's parser)
    hdr.stream_payload.v0 = hdr.stream_payload.v0 ^ hdr.stream_cipher.v0;
-   hdr.stream_payload.v1 = hdr.stream_payload.v1 ^ hdr.stream_cipher.v1;
-   hdr.stream_payload.v2 = hdr.stream_payload.v2 ^ hdr.stream_cipher.v2;
-   hdr.stream_payload.v3 = hdr.stream_payload.v3 ^ hdr.stream_cipher.v3;
-   hdr.stream_payload.v4 = hdr.stream_payload.v4 ^ hdr.stream_cipher.v4;
-   hdr.stream_payload.v5 = hdr.stream_payload.v5 ^ hdr.stream_cipher.v5;
-   hdr.stream_payload.v6 = hdr.stream_payload.v6 ^ hdr.stream_cipher.v6;
-   hdr.stream_payload.v7 = hdr.stream_payload.v7 ^ hdr.stream_cipher.v7;
-   hdr.stream_payload.v8 = hdr.stream_payload.v8 ^ hdr.stream_cipher.v8;
-   hdr.stream_payload.v9 = hdr.stream_payload.v9 ^ hdr.stream_cipher.v9;
-   hdr.stream_payload.v10 = hdr.stream_payload.v10 ^ hdr.stream_cipher.v10;
-   hdr.stream_payload.v11 = hdr.stream_payload.v11 ^ hdr.stream_cipher.v11;
-   hdr.stream_payload.v12 = hdr.stream_payload.v12 ^ hdr.stream_cipher.v12;
-   hdr.stream_payload.v13 = hdr.stream_payload.v13 ^ hdr.stream_cipher.v13;
-   hdr.stream_payload.v14 = hdr.stream_payload.v14 ^ hdr.stream_cipher.v14;
-   hdr.stream_payload.v15 = hdr.stream_payload.v15 ^ hdr.stream_cipher.v15;
+   hdr.stream_payload.v1 = hdr.stream_payload.v1 ^ hdr.stream_cipher.v4;
+   hdr.stream_payload.v2 = hdr.stream_payload.v2 ^ hdr.stream_cipher.v8;
+   hdr.stream_payload.v3 = hdr.stream_payload.v3 ^ hdr.stream_cipher.v12;
+   hdr.stream_payload.v4 = hdr.stream_payload.v4 ^ hdr.stream_cipher.v13;
+   hdr.stream_payload.v5 = hdr.stream_payload.v5 ^ hdr.stream_cipher.v1;
+   hdr.stream_payload.v6 = hdr.stream_payload.v6 ^ hdr.stream_cipher.v5;
+   hdr.stream_payload.v7 = hdr.stream_payload.v7 ^ hdr.stream_cipher.v9;
+   hdr.stream_payload.v8 = hdr.stream_payload.v8 ^ hdr.stream_cipher.v10;
+   hdr.stream_payload.v9 = hdr.stream_payload.v9 ^ hdr.stream_cipher.v14;
+   hdr.stream_payload.v10 = hdr.stream_payload.v10 ^ hdr.stream_cipher.v2;
+   hdr.stream_payload.v11 = hdr.stream_payload.v11 ^ hdr.stream_cipher.v6;
+   hdr.stream_payload.v12 = hdr.stream_payload.v12 ^ hdr.stream_cipher.v7;
+   hdr.stream_payload.v13 = hdr.stream_payload.v13 ^ hdr.stream_cipher.v11;
+   hdr.stream_payload.v14 = hdr.stream_payload.v14 ^ hdr.stream_cipher.v15;
+   hdr.stream_payload.v15 = hdr.stream_payload.v15 ^ hdr.stream_cipher.v3;
 
    // Definindo porta de saida e pulando Egress
    ig_tm_md.ucast_egress_port = 0x1;
    ig_tm_md.bypass_egress = 0x1;
 
    // Limpando cabeçalhos de round e estado para saida
-   hdr.stream_round.setInvalid();
-   hdr.stream_cipher.setInvalid();
+   // hdr.stream_round.setInvalid();
+   // hdr.stream_cipher.setInvalid();
    exit;
 }
 

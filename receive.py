@@ -39,9 +39,9 @@ def get_if():
 def handle_pkt(pkt):
     #if (UDP in pkt and pkt[UDP].dport == 100) or (Ether in pkt and pkt[Ether].type == 0xABCD):
         print("got a packet")
-        pkt.show()
+        #pkt.show()
         hexdump(pkt)
-        print(swap32(pkt[ForroPayload].d0))
+        #print(swap32(pkt[ForroPayload].d0))
         sys.stdout.flush()
 
 

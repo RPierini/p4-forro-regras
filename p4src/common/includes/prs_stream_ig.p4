@@ -15,7 +15,7 @@ state parse_stream_round {
         (0, 2): parse_qr;
         (0, 4): parse_qr_even_to_odd;
         (0, 6): parse_qr;
-        (1, 7): parse_stream_cipher_payload; // finalization
+        (1, 7): parse_stream_cipher; // finalization
         default: accept;
     }
 }
@@ -71,8 +71,13 @@ state parse_qr_even_to_odd {
     transition accept;
 }
 
-state parse_stream_cipher_payload {
+state parse_stream_cipher {
     pkt.extract(hdr.stream_cipher);
+    pkt.advance(512);
+    transition parse_stream_payload;
+}
+
+state parse_stream_payload {
     pkt.extract(hdr.stream_payload);
     transition accept;
 }
