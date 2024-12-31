@@ -3,13 +3,12 @@ table tbl_stream_ig0 {
         hdr.stream_round.round: exact;
     }
     actions = {
-        i0_qr0;
-        i0_qr2;
-        i0_qr4;
-        i0_qr6;
+        i0_qr15;
+        i0_qr3;
+        i0_qr7;
         drop;
     }
-    size = 128;
+    size = 1;
     default_action = drop;
 }
 
@@ -18,13 +17,12 @@ table tbl_stream_ig1 {
         hdr.stream_round.round: exact;
     }
     actions = {
-        i1_qr0;
-        i1_qr2;
-        i1_qr4;
-        i1_qr6;
+        i1_qr15;
+        i1_qr3;
+        i1_qr7;
     }
-    size = 128;
-    default_action = i1_qr0;
+    size = 1;
+    default_action = i1_qr15;
 }
 
 table tbl_stream_ig2 {
@@ -32,13 +30,12 @@ table tbl_stream_ig2 {
         hdr.stream_round.round: exact;
     }
     actions = {
-        i2_qr0;
-        i2_qr2;
-        i2_qr4;
-        i2_qr6;
+        i2_qr15;
+        i2_qr3;
+        i2_qr7;
     }
-    size = 128;
-    default_action = i2_qr0;
+    size = 1;
+    default_action = i2_qr15;
 }
 
 table tbl_stream_ig3 {
@@ -46,13 +43,12 @@ table tbl_stream_ig3 {
         hdr.stream_round.round: exact;
     }
     actions = {
-        i3_qr0;
-        i3_qr2;
-        i3_qr4;
-        i3_qr6;
+        i3_qr15;
+        i3_qr3;
+        i3_qr7;
     }
-    size = 128;
-    default_action = i3_qr0;
+    size = 1;
+    default_action = i3_qr15;
 }
 
 table tbl_stream_ig4 {
@@ -60,13 +56,12 @@ table tbl_stream_ig4 {
         hdr.stream_round.round: exact;
     }
     actions = {
-        i4_qr0;
-        i4_qr2;
-        i4_qr4;
-        i4_qr6;
+        i4_qr15;
+        i4_qr3;
+        i4_qr7;
     }
-    size = 128;
-    default_action = i4_qr0;
+    size = 1;
+    default_action = i4_qr15;
 }
 
 table tbl_stream_ig5 {
@@ -74,13 +69,12 @@ table tbl_stream_ig5 {
         hdr.stream_round.round: exact;
     }
     actions = {
-        i5_qr0;
-        i5_qr2;
-        i5_qr4;
-        i5_qr6;
+        i5_qr15;
+        i5_qr3;
+        i5_qr7;
     }
-    size = 128;
-    default_action = i5_qr0;
+    size = 1;
+    default_action = i5_qr15;
 }
 
 table tbl_stream_ig6 {
@@ -88,13 +82,12 @@ table tbl_stream_ig6 {
         hdr.stream_round.round: exact;
     }
     actions = {
-        i6_qr0;
-        i6_qr2;
-        i6_qr4;
-        i6_qr6;
+        i6_qr15;
+        i6_qr3;
+        i6_qr7;
     }
-    size = 128;
-    default_action = i6_qr0;
+    size = 1;
+    default_action = i6_qr15;
 }
 
 table tbl_stream_ig7 {
@@ -102,13 +95,12 @@ table tbl_stream_ig7 {
         hdr.stream_round.round: exact;
     }
     actions = {
-        i7_qr0;
-        i7_qr2;
-        i7_qr4;
-        i7_qr6;
+        i7_qr15;
+        i7_qr3;
+        i7_qr7;
     }
-    size = 128;
-    default_action = i7_qr0;
+    size = 1;
+    default_action = i7_qr15;
 }
 
 table tbl_stream_ig8 {
@@ -116,13 +108,12 @@ table tbl_stream_ig8 {
         hdr.stream_round.round: exact;
     }
     actions = {
-        i8_qr0;
-        i8_qr2;
-        i8_qr4;
-        i8_qr6;
+        i8_qr15;
+        i8_qr3;
+        i8_qr7;
     }
-    size = 128;
-    default_action = i8_qr0;
+    size = 1;
+    default_action = i8_qr15;
 }
 
 table tbl_stream_ig9 {
@@ -130,13 +121,12 @@ table tbl_stream_ig9 {
         hdr.stream_round.round: exact;
     }
     actions = {
-        i9_qr0;
-        i9_qr2;
-        i9_qr4;
-        i9_qr6;
+        i9_qr15;
+        i9_qr3;
+        i9_qr7;
     }
-    size = 128;
-    default_action = i9_qr0;
+    size = 1;
+    default_action = i9_qr15;
 }
 
 table tbl_stream_ig10 {
@@ -144,25 +134,23 @@ table tbl_stream_ig10 {
         hdr.stream_round.round: exact;
     }
     actions = {
-        i10_qr0;
-        i10_qr2;
-        i10_qr4;
-        i10_qr6;
+        i10_qr15;
+        i10_qr3;
+        i10_qr7;
     }
-    size = 128;
-    default_action = i10_qr0;
+    size = 1;
+    default_action = i10_qr15;
 }
 
 table tbl_stream_ig11 {
     key = {
-        hdr.stream_round.round: exact;
+        hdr.stream_round.round[0:0]: exact;
     }
     actions = {
-        i11_qr0;
-        i11_qr2;
-        i11_qr4;
-        i11_qr6;
+        i11_qr15;
+        i11_qr3;
+        i11_qr7;
     }
-    size = 128;
-    default_action = i11_qr0;
+    size = 1;
+    default_action = i11_qr15;
 }

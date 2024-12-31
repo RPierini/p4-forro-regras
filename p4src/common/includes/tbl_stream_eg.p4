@@ -3,13 +3,10 @@ table tbl_stream_eg0 {
         hdr.stream_round.round: exact;
     }
     actions = {
-        e0_qr1;
-        e0_qr3;
-        e0_qr5;
-        e0_qr7;
+        e0_qr;
     }
-    size = 128;
-    default_action = e0_qr1;
+    size = 1;
+    default_action = e0_qr;
 }
 
 table tbl_stream_eg1 {
@@ -17,13 +14,10 @@ table tbl_stream_eg1 {
         hdr.stream_round.round: exact;
     }
     actions = {
-        e1_qr1;
-        e1_qr3;
-        e1_qr5;
-        e1_qr7;
+        e1_qr;
     }
-    size = 128;
-    default_action = e1_qr1;
+    size = 1;
+    default_action = e1_qr;
 }
 
 table tbl_stream_eg2 {
@@ -31,13 +25,10 @@ table tbl_stream_eg2 {
         hdr.stream_round.round: exact;
     }
     actions = {
-        e2_qr1;
-        e2_qr3;
-        e2_qr5;
-        e2_qr7;
+        e2_qr;
     }
-    size = 128;
-    default_action = e2_qr1;
+    size = 1;
+    default_action = e2_qr;
 }
 
 table tbl_stream_eg3 {
@@ -45,13 +36,10 @@ table tbl_stream_eg3 {
         hdr.stream_round.round: exact;
     }
     actions = {
-        e3_qr1;
-        e3_qr3;
-        e3_qr5;
-        e3_qr7;
+        e3_qr;
     }
-    size = 128;
-    default_action = e3_qr1;
+    size = 1;
+    default_action = e3_qr;
 }
 
 table tbl_stream_eg4 {
@@ -59,13 +47,10 @@ table tbl_stream_eg4 {
         hdr.stream_round.round: exact;
     }
     actions = {
-        e4_qr1;
-        e4_qr3;
-        e4_qr5;
-        e4_qr7;
+        e4_qr;
     }
-    size = 128;
-    default_action = e4_qr1;
+    size = 1;
+    default_action = e4_qr;
 }
 
 table tbl_stream_eg5 {
@@ -73,13 +58,10 @@ table tbl_stream_eg5 {
         hdr.stream_round.round: exact;
     }
     actions = {
-        e5_qr1;
-        e5_qr3;
-        e5_qr5;
-        e5_qr7;
+        e5_qr;
     }
-    size = 128;
-    default_action = e5_qr1;
+    size = 1;
+    default_action = e5_qr;
 }
 
 table tbl_stream_eg6 {
@@ -87,13 +69,10 @@ table tbl_stream_eg6 {
         hdr.stream_round.round: exact;
     }
     actions = {
-        e6_qr1;
-        e6_qr3;
-        e6_qr5;
-        e6_qr7;
+        e6_qr;
     }
-    size = 128;
-    default_action = e6_qr1;
+    size = 1;
+    default_action = e6_qr;
 }
 
 table tbl_stream_eg7 {
@@ -101,13 +80,10 @@ table tbl_stream_eg7 {
         hdr.stream_round.round: exact;
     }
     actions = {
-        e7_qr1;
-        e7_qr3;
-        e7_qr5;
-        e7_qr7;
+        e7_qr;
     }
-    size = 128;
-    default_action = e7_qr1;
+    size = 1;
+    default_action = e7_qr;
 }
 
 table tbl_stream_eg8 {
@@ -115,13 +91,10 @@ table tbl_stream_eg8 {
         hdr.stream_round.round: exact;
     }
     actions = {
-        e8_qr1;
-        e8_qr3;
-        e8_qr5;
-        e8_qr7;
+        e8_qr;
     }
-    size = 128;
-    default_action = e8_qr1;
+    size = 1;
+    default_action = e8_qr;
 }
 
 table tbl_stream_eg9 {
@@ -129,13 +102,10 @@ table tbl_stream_eg9 {
         hdr.stream_round.round: exact;
     }
     actions = {
-        e9_qr1;
-        e9_qr3;
-        e9_qr5;
-        e9_qr7;
+        e9_qr;
     }
-    size = 128;
-    default_action = e9_qr1;
+    size = 1;
+    default_action = e9_qr;
 }
 
 table tbl_stream_eg10 {
@@ -143,13 +113,10 @@ table tbl_stream_eg10 {
         hdr.stream_round.round: exact;
     }
     actions = {
-        e10_qr1;
-        e10_qr3;
-        e10_qr5;
-        e10_qr7;
+        e10_qr;
     }
-    size = 128;
-    default_action = e10_qr1;
+    size = 1;
+    default_action = e10_qr;
 }
 
 table tbl_stream_eg11 {
@@ -157,12 +124,8 @@ table tbl_stream_eg11 {
         hdr.stream_round.round: exact;
     }
     actions = {
-        e11_qr1;
-        e11_qr3;
-        e11_qr5;
-        e11_qr7;
-        e11_qr7_fin;
+        e11_qr;
     }
-    size = 128;
-    default_action = e11_qr1;
+    size = 1;
+    default_action = e11_qr;
 }

@@ -10,19 +10,14 @@ struct my_egress_headers_t {
     ethernet_h              ethernet;
     stream_nonce_t          stream_nonce;
     stream_round_t          stream_round;
-    // QR 1, 3, 5 or 7 Deparser
-    temp1_t                 temp1;
-    vector_t                qr_e;
-    temp2_t                 temp2;
-    vector_t                qr_a;
-    vector_t                qr_b;
-    vector_t                qr_c;
-    vector_t                qr_d;
+    line_t                  s0_line1;
+    line_t                  s0_line0;
 }
 
     /********  G L O B A L   E G R E S S   M E T A D A T A  *********/
 
 struct my_egress_metadata_t {
+    hashword_t  s0_line0_a; //used to update two elements of the state matrix in the same stage (e11_qr)
 }
 
     /***********************  P A R S E R  **************************/
@@ -42,11 +37,8 @@ control Egress(
     inout egress_intrinsic_metadata_for_output_port_t  eg_oport_md)
 {
 
-    Hash<bit<32>>(HashAlgorithm_t.IDENTITY) copy32_0;
-    #include "includes/act_stream_eg_qr1.p4"
-    #include "includes/act_stream_eg_qr3.p4"
-    #include "includes/act_stream_eg_qr5.p4"
-    #include "includes/act_stream_eg_qr7.p4"
+    // Hash<bit<32>>(HashAlgorithm_t.IDENTITY) copy32_0;
+    #include "includes/act_stream_eg_qr.p4"
     #include "includes/tbl_stream_eg.p4"
 
     apply {

@@ -16,6 +16,8 @@ parser IngressParser(packet_in        pkt,
 
     state parse_init_metadata {
         meta.fin = 0x0;
+        meta.relative_qr = 0x0;
+        meta.recirculation = 0x0;
         transition parse_ethernet;
     }
 

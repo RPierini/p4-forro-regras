@@ -8,54 +8,70 @@
 
 struct my_ingress_headers_t {
     ethernet_h              ethernet;
+
+    // Control headers
     stream_nonce_t          stream_nonce;
     stream_round_t          stream_round;
-    // QR 0 (Odd to Even rounds) Deparser
-    vector_t                qr0_x3;
-    vector_t                qr0_x0;
-    vector_t                qr0_x9;
-    vector_t                qr0_x8;
-    vector_t                qr0_x6;
-    vector_t                qr0_x4;
-    vector_t                qr0_x1;
-    vector_t                qr0_x10;
-    vector_t                qr0_e;
-    vector_t                qr0_x7;
-    vector_t                qr0_x5;
-    vector_t                qr0_x2;
-    vector_t                qr0_a;
-    vector_t                qr0_b;
-    vector_t                qr0_c;
-    vector_t                qr0_d;
-    // QR 2 or 6 Deparser
-    temp1_t                 temp1;
-    vector_t                qr26_e;
-    temp2_t                 temp2;
-    vector_t                qr26_a;
-    vector_t                qr26_b;
-    vector_t                qr26_c;
-    vector_t                qr26_d;
-    // QR 4 (Even to Odd rounds) Deparser
-    vector_t                qr4_x3;
-    vector_t                qr4_x7;
-    vector_t                qr4_x10;
-    vector_t                qr4_x2;
-    vector_t                qr4_x6;
-    vector_t                qr4_x9;
-    vector_t                qr4_x1;
-    vector_t                qr4_x5;
-    vector_t                qr4_e;
-    vector_t                qr4_x0;
-    vector_t                qr4_x4;
-    vector_t                qr4_x8;
-    vector_t                qr4_a;
-    vector_t                qr4_b;
-    vector_t                qr4_c;
-    vector_t                qr4_d;
+
+    // QR 1 or 5 (simple line reorder)
+    line_t      s0_qr15_line2;
+    line_t      s0_qr15_line3;
+    line_t      s0_qr15_line1;
+    line_t      s0_qr15_line0;
+
+    // QR 3 - reorder Lines to Columns
+    vector_t    s0_qr3_v0;
+    vector_t    s0_qr3_v5;
+    vector_t    s0_qr3_v10;
+    vector_t    s0_qr3_d;
+    vector_t    s0_qr3_t3;
+
+    vector_t    s0_qr3_v1;
+    vector_t    s0_qr3_v6;
+    vector_t    s0_qr3_c;
+    vector_t    s0_qr3_v12;
+    vector_t    s0_qr3_t0;
+
+    vector_t    s0_qr3_v2;
+    vector_t    s0_qr3_b;
+    vector_t    s0_qr3_v8;
+    vector_t    s0_qr3_v13;
+    vector_t    s0_qr3_t1;
+
+    vector_t    s0_qr3_a;
+    vector_t    s0_qr3_v4;
+    vector_t    s0_qr3_v9;
+    vector_t    s0_qr3_v14;
+    vector_t    s0_qr3_e;
+
+    // QR 7 - reorder Columns to Lines
+    vector_t    s0_qr7_v0;
+    vector_t    s0_qr7_b;
+    vector_t    s0_qr7_v8;
+    vector_t    s0_qr7_v12;
+    vector_t    s0_qr7_t3;
+
+    vector_t    s0_qr7_v1;
+    vector_t    s0_qr7_v5;
+    vector_t    s0_qr7_c;
+    vector_t    s0_qr7_v13;
+    vector_t    s0_qr7_t0;
+
+    vector_t    s0_qr7_v2;
+    vector_t    s0_qr7_v6;
+    vector_t    s0_qr7_v10;
+    vector_t    s0_qr7_d;
+    vector_t    s0_qr7_t1;
+
+    vector_t    s0_qr7_a;
+    vector_t    s0_qr7_v7;
+    vector_t    s0_qr7_v11;
+    vector_t    s0_qr7_v15;
+    vector_t    s0_qr7_e;
 
     // Init/Fin and Payload.
-    stream_cipher_t         stream_cipher;
-    stream_payload_t        stream_payload;
+    stream_cipher_t         stream_cipher_s0;
+    stream_payload_t        stream_payload_b0;
 }
 
     /******  G L O B A L   I N G R E S S   M E T A D A T A  *********/
@@ -63,6 +79,8 @@ struct my_ingress_headers_t {
 struct my_ingress_metadata_t {
     bit<1>      fin;
     bit<3>      relative_qr;
+    bit<1>      recirculation; //helps to choose what port use for recirculation at qr_r0 and qr_r1
+    hashword_t  s0_a; //used to update two elements of the state matrix in the same stage (i11_qr)
 }
 
     /***********************  P A R S E R  **************************/
@@ -85,10 +103,9 @@ control Ingress(
     // Hash<bit<32>>(HashAlgorithm_t.IDENTITY) copy32_1;
     #include "includes/act_utils.p4"
     #include "includes/act_stream_ig_finit.p4"
-    #include "includes/act_stream_ig_qr0.p4"
-    #include "includes/act_stream_ig_qr2.p4"
-    #include "includes/act_stream_ig_qr4.p4"
-    #include "includes/act_stream_ig_qr6.p4"
+    #include "includes/act_stream_ig_qr3.p4"
+    #include "includes/act_stream_ig_qr7.p4"
+    #include "includes/act_stream_ig_qr15.p4"
     #include "includes/tbl_stream_ig.p4"
     #include "includes/tbl_stream_finit.p4"
 

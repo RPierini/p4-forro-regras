@@ -3,7 +3,6 @@ table tbl_stream_ig0_finit {
         hdr.ethernet.src_addr:   exact;
     }
     actions = {
-        i0_add_values_chacha;
         i0_add_values_forro;
         drop;
     }
