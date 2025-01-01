@@ -83,7 +83,7 @@ state parse_qr7 {
 state parse_stream_cipher {
     pkt.extract(hdr.stream_cipher_s0);
     // pkt.extract(hdr.stream_cipher_s1);
-    pkt.advance(512);
+    // pkt.advance(512);
     transition parse_stream_payload;
 }
 

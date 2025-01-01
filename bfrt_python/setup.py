@@ -39,20 +39,20 @@ def clear_all(verbose=True, batching=True):
                     
 clear_all(verbose=True)
 
+pipeline = "Ingress"
+table = "ig"
+action = "i"
 #Inserindo regras de calculo do Forro
 for round in range(0, total_rounds):
-    #rounds ímpares é Ingress, rounds pares é Egress
+    #rounds ímpares é Ingress, rounds pares é Egress (portanto, pula insercao)
     if round % 2 == 0:
-        pipeline = "Ingress"
-        table = "ig"
-        action = "i"
-    else:
-        pipeline = "Egress"
-        table = "eg"
-        action = "e"
+        continue
 
     #O QR a ser executado na travessia varia de 0 a 7, pares no Ingress e Ímpares no Egress
     qr = (round) % 8
+
+    if qr == 1 or qr == 5:
+            qr = 15
 
     #Último QR tem uma ação específicas para a finalizacao, estágio 11
     if round == (total_rounds-1):
@@ -67,7 +67,7 @@ for round in range(0, total_rounds):
         #print(code)
 
 #Inserindo regra para encaminhar para finalizacao
-p4.Egress.tbl_stream_eg11.add_with_e11_qr7_fin(round=(total_rounds-1))
+p4.Ingress.tbl_stream_ig11.add_with_i11_qr7_fin(round=(total_rounds-1))
 
 ## Trilha de finalizacao
 # Regras por dispositivo

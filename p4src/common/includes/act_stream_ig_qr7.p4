@@ -39,15 +39,41 @@ action i9_qr7() {
 }
 
 action i10_qr7() {
-   hdr.s0_qr7_a.v = hdr.s0_qr7_a.v + hdr.s0_qr7_b.v;
+   meta.s0_a = hdr.s0_qr7_a.v + hdr.s0_qr7_b.v;
 }
 
 // Uses second recirculation port (QRs 3 and 7)
 action i11_qr7() {
-   hdr.s0_qr7_a.v = hdr.s0_qr7_a.v[23:0] ++ hdr.s0_qr7_a.v[31:24];
+   hdr.s0_qr7_a.v = meta.s0_a[23:0] ++ meta.s0_a[31:24];
+
+   //updating next QR's E with this QR's A value.
+   hdr.s0_qr7_t3.v = meta.s0_a[23:0] ++ meta.s0_a[31:24];
+
+   //Updating last QR's A from last QR's E;
+   hdr.s0_qr7_v1.v = hdr.s0_qr7_t1.v;
+
+   //updating next QR's A with this QR's E
    hdr.s0_qr7_v2.v = hdr.s0_qr7_e.v;
-   hdr.s0_qr7_a.v = hdr.s0_qr7_t3.v;
 
    hdr.stream_round.round = hdr.stream_round.round + 1;
+   ig_tm_md.ucast_egress_port=68+128;
+}
+
+//Skips egress and set to finalization
+action i11_qr7_fin() {
+   hdr.s0_qr7_a.v = meta.s0_a[23:0] ++ meta.s0_a[31:24];
+
+   //updating next QR's E with this QR's A value.
+   hdr.s0_qr7_t3.v = meta.s0_a[23:0] ++ meta.s0_a[31:24];
+
+   //Updating last QR's A from last QR's E;
+   hdr.s0_qr7_v1.v = hdr.s0_qr7_t1.v;
+
+   //updating next QR's A with this QR's E
+   hdr.s0_qr7_v2.v = hdr.s0_qr7_e.v;
+
+   ig_tm_md.bypass_egress = 0x1;
+
+   hdr.stream_round.round = hdr.stream_round.round + 128;
    ig_tm_md.ucast_egress_port=68+128;
 }

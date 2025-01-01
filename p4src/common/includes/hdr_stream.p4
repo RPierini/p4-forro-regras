@@ -20,23 +20,28 @@ header line_t {
     hashword_t e;
 }
 
+// Rotated as QR0's expected input order (columns in lines) 
 header stream_cipher_t {
     hashword_t  v0;
-    hashword_t  v1;
-    hashword_t  v2;
-    hashword_t  v3;
     hashword_t  v4;
-    hashword_t  v5;
-    hashword_t  v6;
-    hashword_t  v7;
     hashword_t  v8;
-    hashword_t  v9;
-    hashword_t  v10;
-    hashword_t  v11;
     hashword_t  v12;
+    hashword_t  t3;
+    hashword_t  v1;
+    hashword_t  v5;
+    hashword_t  v9;
     hashword_t  v13;
+    hashword_t  t0;
+    hashword_t  v2;
+    hashword_t  v6;
+    hashword_t  v10;
     hashword_t  v14;
+    hashword_t  t1;
+    hashword_t  v3;
+    hashword_t  v7;
+    hashword_t  v11;
     hashword_t  v15;
+    hashword_t  t2;
 }
 
 header stream_payload_t {

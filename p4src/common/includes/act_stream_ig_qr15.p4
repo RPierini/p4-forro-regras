@@ -52,7 +52,7 @@ action i11_qr15() {
    //updating next QR's A with this QR's E
    hdr.s0_qr15_line1.a = hdr.s0_qr15_line0.e; //v0 = t0
 
-   //Updating last QR's A from this QR's E;
+   //Updating last QR's A from last QR's E;
    hdr.s0_qr15_line3.a = hdr.s0_qr15_line1.e; //v3 = t3
 
    hdr.stream_round.round = hdr.stream_round.round + 1;
