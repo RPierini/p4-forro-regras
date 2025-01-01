@@ -2,7 +2,11 @@ action i0_add_values_forro(
    hashword_t key0, hashword_t key1, hashword_t key2, hashword_t key3,
    hashword_t key4, hashword_t key5, hashword_t key6, hashword_t key7
 ) {
-   // Inserting the values as if it was the end of a QR7 (so it's swapped "odd to even" on QR0's parser)
+   // Loading round control and state matrix headers (if not extracted at Parser)
+   hdr.stream_round.setValid();
+   hdr.stream_cipher_s0.setValid(); 
+   // hdr.stream_cipher_s1.setValid();
+
    hdr.stream_cipher_s0.v0  = hdr.stream_cipher_s0.v0  + key0; //v0 = k0
    hdr.stream_cipher_s0.v1  = hdr.stream_cipher_s0.v1  + key1; //v1 = k1
    hdr.stream_cipher_s0.v2  = hdr.stream_cipher_s0.v2  + key2; //v2 = k2
@@ -40,7 +44,6 @@ action i0_add_values_forro(
 }
 
 action i1_cipher () {
-   // Inserting the values as if it was the end of a QR7 (so it's swapped "odd to even")
    hdr.stream_payload_b0.v0  = hdr.stream_payload_b0.v0  ^ hdr.stream_cipher_s0.v0;
    hdr.stream_payload_b0.v1  = hdr.stream_payload_b0.v1  ^ hdr.stream_cipher_s0.v1;
    hdr.stream_payload_b0.v2  = hdr.stream_payload_b0.v2  ^ hdr.stream_cipher_s0.v2;
@@ -75,21 +78,21 @@ action i1_cipher () {
    // hdr.stream_payload_b1.v14 = hdr.stream_payload_b1.v14 ^ hdr.stream_cipher_s1.v15;
    // hdr.stream_payload_b1.v15 = hdr.stream_payload_b1.v15 ^ hdr.stream_cipher_s1.v3;
 
-   // Definindo porta de saida e pulando Egress
+   // Setting header back to INIT for next switch
+   hdr.ethernet.ether_type = ether_type_t.STREAM_INIT;
+
+   // Setting Egress port and skipping egress Pipeline
    ig_tm_md.ucast_egress_port = 0x1;
    ig_tm_md.bypass_egress = 0x1;
 
-   // Limpando cabeçalhos de round e estado para saida
+   // Cleaning state and round control headers to send to the network
    hdr.stream_round.setInvalid();
    hdr.stream_cipher_s0.setInvalid();
    exit;
 }
 
 action i1_init() {
-   hdr.stream_round.setValid();
-   hdr.stream_cipher_s0.setValid();
-   // hdr.stream_cipher_s1.setValid();
-
+   // Changing ethertype and sending to Egress to process QR0
    hdr.ethernet.ether_type = ether_type_t.STREAM_CALC;
 
    ig_tm_md.ucast_egress_port=68+128;
