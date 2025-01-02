@@ -12,7 +12,7 @@ table tbl_stream_ig0_finit {
 
 table tbl_stream_ig1_finit {
     key = {
-        meta.fin: exact; //To decide if encrypt/decrypt or start calculations
+        hdr.stream_round.round[7:7]: exact; //To decide if encrypt/decrypt or start calculations
     }
     actions = {
         i1_init(); //Default: Skip cipher and start calculations
@@ -24,7 +24,7 @@ table tbl_stream_ig1_finit {
 
 table tbl_stream_ig2_finit {
     key = {
-        meta.fin: exact; //To decide if encrypt/decrypt or start calculations
+        hdr.stream_round.round[7:7]: exact; //To decide if encrypt/decrypt or start calculations
     }
     actions = { //Default: Skip cipher and start calculations
         i2_cipher_two_block();
@@ -35,7 +35,7 @@ table tbl_stream_ig2_finit {
 
 table tbl_stream_ig3_finit {
     key = {
-        meta.fin: exact; //To decide if encrypt/decrypt or start calculations
+        hdr.stream_round.round[7:7]: exact; //To decide if encrypt/decrypt or start calculations
     }
     actions = { //Default: Skip cipher and start calculations
         i3_cipher_two_block();
@@ -46,7 +46,7 @@ table tbl_stream_ig3_finit {
 
 table tbl_stream_ig4_finit {
     key = {
-        meta.fin: exact; //To decide if encrypt/decrypt or start calculations
+        hdr.stream_round.round[7:7]: exact; //To decide if encrypt/decrypt or start calculations
     }
     actions = { //Default: Skip cipher and start calculations
         i4_cipher_two_block();
@@ -57,7 +57,7 @@ table tbl_stream_ig4_finit {
 
 table tbl_stream_ig5_finit {
     key = {
-        meta.fin: exact; //To decide if encrypt/decrypt or start calculations
+        hdr.stream_round.round[7:7]: exact; //To decide if encrypt/decrypt or start calculations
     }
     actions = { //Default: Skip cipher and start calculations
         i5_cipher_two_block();
@@ -68,7 +68,7 @@ table tbl_stream_ig5_finit {
 
 table tbl_stream_ig6_finit {
     key = {
-        meta.fin: exact; //To decide if encrypt/decrypt or start calculations
+        hdr.stream_round.round[7:7]: exact; //To decide if encrypt/decrypt or start calculations
     }
     actions = { //Default: Skip cipher and start calculations
         i6_cipher_two_block();
@@ -79,7 +79,7 @@ table tbl_stream_ig6_finit {
 
 table tbl_stream_ig7_finit {
     key = {
-        meta.fin: exact; //To decide if encrypt/decrypt or start calculations
+        hdr.stream_round.round[7:7]: exact; //To decide if encrypt/decrypt or start calculations
     }
     actions = { //Default: Skip cipher and start calculations
         i7_cipher_two_block();
@@ -90,7 +90,7 @@ table tbl_stream_ig7_finit {
 
 table tbl_stream_ig8_finit {
     key = {
-        meta.fin: exact; //To decide if encrypt/decrypt or start calculations
+        hdr.stream_round.round[7:7]: exact; //To decide if encrypt/decrypt or start calculations
     }
     actions = { //Default: Skip cipher and start calculations
         i8_cipher_two_block();
@@ -101,7 +101,7 @@ table tbl_stream_ig8_finit {
 
 table tbl_stream_ig9_finit {
     key = {
-        meta.fin: exact; //To decide if encrypt/decrypt or start calculations
+        hdr.stream_round.round[7:7]: exact; //To decide if encrypt/decrypt or start calculations
     }
     actions = { //Default: Skip cipher and start calculations
         i9_cipher_two_block();

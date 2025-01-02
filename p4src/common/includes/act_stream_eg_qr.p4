@@ -1,6 +1,6 @@
 action e0_qr() {
-   hdr.s0_line0.d = hdr.s0_line0.d + hdr.s0_line0.e;
-   hdr.s1_line0.d = hdr.s1_line0.d + hdr.s1_line0.e;
+   hdr.s0_line0.d = hdr.s0_line0.d + hdr.s0_line1.a;
+   hdr.s1_line0.d = hdr.s1_line0.d + hdr.s1_line1.a;
 }
 
 action e1_qr() {
@@ -24,13 +24,13 @@ action e4_qr() {
 }
 
 action e5_qr() {
-   hdr.s0_line0.e = hdr.s0_line0.e ^ hdr.s0_line0.a;
-   hdr.s1_line0.e = hdr.s1_line0.e ^ hdr.s1_line0.a;
+   hdr.s0_line1.a = hdr.s0_line1.a ^ hdr.s0_line0.a;
+   hdr.s1_line1.a = hdr.s1_line1.a ^ hdr.s1_line0.a;
 }
 
 action e6_qr() {
-   hdr.s0_line0.d = hdr.s0_line0.d + hdr.s0_line0.e;
-   hdr.s1_line0.d = hdr.s1_line0.d + hdr.s1_line0.e;
+   hdr.s0_line0.d = hdr.s0_line0.d + hdr.s0_line1.a;
+   hdr.s1_line0.d = hdr.s1_line0.d + hdr.s1_line1.a;
 }
 
 action e7_qr() {
@@ -49,17 +49,13 @@ action e9_qr() {
 }
 
 action e10_qr() {
-   meta.s0_line0_a = hdr.s0_line0.a + hdr.s0_line0.b;
-   meta.s1_line0_a = hdr.s1_line0.a + hdr.s1_line0.b;
+   hdr.s0_line0.a = hdr.s0_line0.a + hdr.s0_line0.b;
+   hdr.s1_line0.a = hdr.s1_line0.a + hdr.s1_line0.b;
 }
 
 action e11_qr() {
-   hdr.s0_line0.a = meta.s0_line0_a[23:0] ++ meta.s0_line0_a[31:24];
-   hdr.s1_line0.a = meta.s1_line0_a[23:0] ++ meta.s1_line0_a[31:24];
-
-   //updating E for next QR with current QR's A value.
-   hdr.s0_line1.e = meta.s0_line0_a[23:0] ++ meta.s0_line0_a[31:24]; //qr0: t0 = v0; qr2: t2 = v2; qr4: t0 = v0; qr6: t3 = v3;
-   hdr.s1_line1.e = meta.s1_line0_a[23:0] ++ meta.s1_line0_a[31:24]; //qr0: t0 = v0; qr2: t2 = v2; qr4: t0 = v0; qr6: t3 = v3;
+   hdr.s0_line0.a = hdr.s0_line0.a[23:0] ++ hdr.s0_line0.a[31:24];
+   hdr.s1_line0.a = hdr.s1_line0.a[23:0] ++ hdr.s1_line0.a[31:24];
 
    hdr.stream_round.round = hdr.stream_round.round + 1;
 }

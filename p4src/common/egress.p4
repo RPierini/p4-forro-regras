@@ -8,19 +8,19 @@
 
 struct my_egress_headers_t {
     ethernet_h              ethernet;
-    stream_nonce_t          stream_nonce;
     stream_round_t          stream_round;
-    line_t                  s0_line1;
-    line_t                  s1_line1;
+    stream_nonce_t          stream_nonce;
+    line_t                  s0_line2;
+    line_t                  s1_line2;
     line_t                  s0_line0;
     line_t                  s1_line0;
+    line_t                  s0_line1;
+    line_t                  s1_line1;
 }
 
     /********  G L O B A L   E G R E S S   M E T A D A T A  *********/
 
 struct my_egress_metadata_t {
-    hashword_t  s0_line0_a; //used to update two elements of the state matrix in the same stage (e11_qr)
-    hashword_t  s1_line0_a; //used to update two elements of the state matrix in the same stage (e11_qr)
 }
 
     /***********************  P A R S E R  **************************/

@@ -17,57 +17,62 @@ action i0_add_values_forro(
 
    //State Matrix 0
    hdr.s0_finit_line0.a = hdr.s0_finit_line0.a + key0; //v0 = k0
-   hdr.s0_finit_line1.a = hdr.s0_finit_line1.a + key1; //v1 = k1
-   hdr.s0_finit_line2.a = hdr.s0_finit_line2.a + key2; //v2 = k2
-   hdr.s0_finit_line3.a = hdr.s0_finit_line3.a + key3; //v3 = k3
+   hdr.s0_finit_line2.a = hdr.s0_finit_line2.a + key1; //v1 = k1
+   hdr.s0_finit_line3.a = hdr.s0_finit_line3.a + key2; //v2 = k2
+   hdr.s0_finit_line1.a = hdr.s0_finit_line1.a + key3; //v3 = k3
    hdr.s0_finit_line0.b = hdr.s0_finit_line0.b + 0x0; //v4 = t0
-   hdr.s0_finit_line1.b = hdr.s0_finit_line1.b + 0x0; //v5 = t1
-   hdr.s0_finit_line2.b = hdr.s0_finit_line2.b + FORRO_C0; // v6 = C0
-   hdr.s0_finit_line3.b = hdr.s0_finit_line3.b + FORRO_C1; //v7 = C1
+   hdr.s0_finit_line2.b = hdr.s0_finit_line2.b + 0x0; //v5 = t1
+   hdr.s0_finit_line3.b = hdr.s0_finit_line3.b + FORRO_C0; // v6 = C0
+   hdr.s0_finit_line1.b = hdr.s0_finit_line1.b + FORRO_C1; //v7 = C1
    hdr.s0_finit_line0.c = hdr.s0_finit_line0.c + key4; //v8 = k4
-   hdr.s0_finit_line1.c = hdr.s0_finit_line1.c + key5; //v9 = k5
-   hdr.s0_finit_line2.c = hdr.s0_finit_line2.c + key6; //v10 = k6
-   hdr.s0_finit_line3.c = hdr.s0_finit_line3.c + key7; // v11 = k7
+   hdr.s0_finit_line2.c = hdr.s0_finit_line2.c + key5; //v9 = k5
+   hdr.s0_finit_line3.c = hdr.s0_finit_line3.c + key6; //v10 = k6
+   hdr.s0_finit_line1.c = hdr.s0_finit_line1.c + key7; // v11 = k7
    hdr.s0_finit_line0.d = hdr.s0_finit_line0.d + hdr.stream_nonce.n0; // v12 = n0
-   hdr.s0_finit_line1.d = hdr.s0_finit_line1.d + hdr.stream_nonce.n1; //v13 = n1
-   hdr.s0_finit_line2.d = hdr.s0_finit_line2.d + FORRO_C2; //v14 = C2
-   hdr.s0_finit_line3.d = hdr.s0_finit_line3.d + FORRO_C3; //v15 = C3
-   hdr.s0_finit_line0.e = key3; //holder for QR0's E, starts with Key3 value
+   hdr.s0_finit_line2.d = hdr.s0_finit_line2.d + hdr.stream_nonce.n1; //v13 = n1
+   hdr.s0_finit_line3.d = hdr.s0_finit_line3.d + FORRO_C2; //v14 = C2
+   hdr.s0_finit_line1.d = hdr.s0_finit_line1.d + FORRO_C3; //v15 = C3
 
    //State Matrix 1
    hdr.s1_finit_line0.a = hdr.s1_finit_line0.a + key0; //v0 = k0
-   hdr.s1_finit_line1.a = hdr.s1_finit_line1.a + key1; //v1 = k1
-   hdr.s1_finit_line2.a = hdr.s1_finit_line2.a + key2; //v2 = k2
-   hdr.s1_finit_line3.a = hdr.s1_finit_line3.a + key3; //v3 = k3
-   hdr.s1_finit_line0.b = hdr.s1_finit_line0.b + 0x0; //v4 = t0
-   hdr.s1_finit_line1.b = hdr.s1_finit_line1.b + 0x1; //v5 = t1
-   hdr.s1_finit_line2.b = hdr.s1_finit_line2.b + FORRO_C0; // v6 = C0
-   hdr.s1_finit_line3.b = hdr.s1_finit_line3.b + FORRO_C1; //v7 = C1
+   hdr.s1_finit_line2.a = hdr.s1_finit_line2.a + key1; //v1 = k1
+   hdr.s1_finit_line3.a = hdr.s1_finit_line3.a + key2; //v2 = k2
+   hdr.s1_finit_line1.a = hdr.s1_finit_line1.a + key3; //v3 = k3
+   hdr.s1_finit_line0.b = hdr.s1_finit_line0.b + 0x1; //v4 = t0
+   hdr.s1_finit_line2.b = hdr.s1_finit_line2.b + 0x0; //v5 = t1
+   hdr.s1_finit_line3.b = hdr.s1_finit_line3.b + FORRO_C0; // v6 = C0
+   hdr.s1_finit_line1.b = hdr.s1_finit_line1.b + FORRO_C1; //v7 = C1
    hdr.s1_finit_line0.c = hdr.s1_finit_line0.c + key4; //v8 = k4
-   hdr.s1_finit_line1.c = hdr.s1_finit_line1.c + key5; //v9 = k5
-   hdr.s1_finit_line2.c = hdr.s1_finit_line2.c + key6; //v10 = k6
-   hdr.s1_finit_line3.c = hdr.s1_finit_line3.c + key7; // v11 = k7
+   hdr.s1_finit_line2.c = hdr.s1_finit_line2.c + key5; //v9 = k5
+   hdr.s1_finit_line3.c = hdr.s1_finit_line3.c + key6; //v10 = k6
+   hdr.s1_finit_line1.c = hdr.s1_finit_line1.c + key7; // v11 = k7
    hdr.s1_finit_line0.d = hdr.s1_finit_line0.d + hdr.stream_nonce.n0; // v12 = n0
-   hdr.s1_finit_line1.d = hdr.s1_finit_line1.d + hdr.stream_nonce.n1; //v13 = n1
-   hdr.s1_finit_line2.d = hdr.s1_finit_line2.d + FORRO_C2; //v14 = C2
-   hdr.s1_finit_line3.d = hdr.s1_finit_line3.d + FORRO_C3; //v15 = C3
-   hdr.s1_finit_line0.e = key3; //holder for QR0's E, starts with Key3 value
+   hdr.s1_finit_line2.d = hdr.s1_finit_line2.d + hdr.stream_nonce.n1; //v13 = n1
+   hdr.s1_finit_line3.d = hdr.s1_finit_line3.d + FORRO_C2; //v14 = C2
+   hdr.s1_finit_line1.d = hdr.s1_finit_line1.d + FORRO_C3; //v15 = C3
 }
 
 action i1_cipher_two_block () {
-   hdr.stream_payload_b0.v0  = hdr.stream_payload_b0.v0  ^ hdr.s0_finit_line0.a;
-   hdr.stream_payload_b0.v1  = hdr.stream_payload_b0.v1  ^ hdr.s0_finit_line1.a;
-   hdr.stream_payload_b1.v0  = hdr.stream_payload_b1.v0  ^ hdr.s1_finit_line0.a;
-   hdr.stream_payload_b1.v1  = hdr.stream_payload_b1.v1  ^ hdr.s1_finit_line1.a;
+   // hdr.stream_payload_b0.v0  = hdr.stream_payload_b0.v0  ^ hdr.s0_finit_line0.a;
+   // hdr.stream_payload_b0.v1  = hdr.stream_payload_b0.v1  ^ hdr.s0_finit_line1.a;
+   // hdr.stream_payload_b1.v0  = hdr.stream_payload_b1.v0  ^ hdr.s1_finit_line0.a;
+   // hdr.stream_payload_b1.v1  = hdr.stream_payload_b1.v1  ^ hdr.s1_finit_line1.a;   
+
+   //DEBUG
+   // Setting header back to INIT for next switch
+   hdr.ethernet.ether_type = ether_type_t.STREAM_INIT;
+
+   // Setting Egress port and skipping egress Pipeline
+   ig_tm_md.ucast_egress_port = 0x1;
+   ig_tm_md.bypass_egress = 0x1;
 }
 
 action i1_init() {
    // Changing ethertype and sending to Egress to process QR0
    hdr.ethernet.ether_type = ether_type_t.STREAM_CALC;
 
-   // ig_tm_md.ucast_egress_port=68+128;
-   ig_tm_md.ucast_egress_port=0x1; //DEBUG
-   // ig_tm_md.bypass_egress = 0x1;
+   // Defining recirculation port
+   ig_tm_md.ucast_egress_port=68+128;
    exit;
 }
 

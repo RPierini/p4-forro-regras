@@ -15,10 +15,6 @@ parser IngressParser(packet_in        pkt,
     }
 
     state parse_init_metadata {
-        meta.fin = 0x0;
-        meta.relative_qr = 0x0;
-        meta.s0_a = 0x0;
-        meta.s1_a = 0x0;
         transition parse_ethernet;
     }
 
@@ -26,7 +22,7 @@ parser IngressParser(packet_in        pkt,
         pkt.extract(hdr.ethernet);
         transition select(hdr.ethernet.ether_type) {
             ether_type_t.STREAM_INIT:    parse_stream_nonce;
-            ether_type_t.STREAM_CALC:    parse_stream_nonce;
+            ether_type_t.STREAM_CALC:    parse_stream_round_nonce;
             default: accept;
         }
     }
