@@ -10,7 +10,6 @@ state parse_stream_round {
     pkt.extract(hdr.stream_round);
     meta.fin = hdr.stream_round.round[7:7];
     meta.relative_qr = (bit<3>)hdr.stream_round.round;
-    meta.recirculation = (bit<1>)hdr.stream_round.round[6:6]; //For recirculation
     transition select(meta.fin, meta.relative_qr) {
         (0, 1): parse_qr15;
         (0, 3): parse_qr3;
@@ -81,13 +80,22 @@ state parse_qr7 {
 }
 
 state parse_stream_cipher {
-    pkt.extract(hdr.stream_cipher_s0);
-    // pkt.extract(hdr.stream_cipher_s1);
-    transition parse_stream_payload;
+    pkt.extract(hdr.s0_finit_line0);
+    pkt.extract(hdr.s1_finit_line0);
+    pkt.extract(hdr.s0_finit_line1);
+    pkt.extract(hdr.s1_finit_line1);
+    pkt.extract(hdr.s0_finit_line2);
+    pkt.extract(hdr.s1_finit_line2);
+    pkt.extract(hdr.s0_finit_line3);
+    pkt.extract(hdr.s1_finit_line3);
+    transition select(meta.fin) {
+        0: accept;
+        1: parse_stream_payload;
+    }
 }
 
 state parse_stream_payload {
     pkt.extract(hdr.stream_payload_b0);
-    // pkt.extract(hdr.stream_payload_b1);
+    pkt.extract(hdr.stream_payload_b1);
     transition accept;
 }

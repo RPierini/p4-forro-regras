@@ -57,7 +57,7 @@ def main():
 
     print("sending on interface %s to %s" % (iface, str(addr)))
     pkt =  Ether(src=get_if_hwaddr(iface), dst='08:00:00:00:01:02', type=0xABCD)
-    pkt = pkt / nonce / payload
+    pkt = pkt / nonce / payload / payload
     sendp(pkt, iface=iface, verbose=False)
 
 

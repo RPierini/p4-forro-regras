@@ -15,9 +15,13 @@ struct my_ingress_headers_t {
 
     // QR 1 or 5 (simple line reorder)
     line_t      s0_qr15_line2;
+    line_t      s1_qr15_line2;
     line_t      s0_qr15_line3;
+    line_t      s1_qr15_line3;
     line_t      s0_qr15_line1;
+    line_t      s1_qr15_line1;
     line_t      s0_qr15_line0;
+    line_t      s1_qr15_line0;
 
     // QR 3 - reorder Lines to Columns
     vector_t    s0_qr3_v0;
@@ -25,24 +29,44 @@ struct my_ingress_headers_t {
     vector_t    s0_qr3_v10;
     vector_t    s0_qr3_d;
     vector_t    s0_qr3_t3;
+    vector_t    s1_qr3_v0;
+    vector_t    s1_qr3_v5;
+    vector_t    s1_qr3_v10;
+    vector_t    s1_qr3_d;
+    vector_t    s1_qr3_t3;
 
     vector_t    s0_qr3_v1;
     vector_t    s0_qr3_v6;
     vector_t    s0_qr3_c;
     vector_t    s0_qr3_v12;
     vector_t    s0_qr3_t0;
+    vector_t    s1_qr3_v1;
+    vector_t    s1_qr3_v6;
+    vector_t    s1_qr3_c;
+    vector_t    s1_qr3_v12;
+    vector_t    s1_qr3_t0;
 
     vector_t    s0_qr3_v2;
     vector_t    s0_qr3_b;
     vector_t    s0_qr3_v8;
     vector_t    s0_qr3_v13;
     vector_t    s0_qr3_t1;
+    vector_t    s1_qr3_v2;
+    vector_t    s1_qr3_b;
+    vector_t    s1_qr3_v8;
+    vector_t    s1_qr3_v13;
+    vector_t    s1_qr3_t1;
 
     vector_t    s0_qr3_a;
     vector_t    s0_qr3_v4;
     vector_t    s0_qr3_v9;
     vector_t    s0_qr3_v14;
     vector_t    s0_qr3_e;
+    vector_t    s1_qr3_a;
+    vector_t    s1_qr3_v4;
+    vector_t    s1_qr3_v9;
+    vector_t    s1_qr3_v14;
+    vector_t    s1_qr3_e;
 
     // QR 7 - reorder Columns to Lines
     vector_t    s0_qr7_v0;
@@ -50,37 +74,66 @@ struct my_ingress_headers_t {
     vector_t    s0_qr7_v8;
     vector_t    s0_qr7_v12;
     vector_t    s0_qr7_t3;
+    vector_t    s1_qr7_v0;
+    vector_t    s1_qr7_b;
+    vector_t    s1_qr7_v8;
+    vector_t    s1_qr7_v12;
+    vector_t    s1_qr7_t3;
 
     vector_t    s0_qr7_v1;
     vector_t    s0_qr7_v5;
     vector_t    s0_qr7_c;
     vector_t    s0_qr7_v13;
     vector_t    s0_qr7_t0;
+    vector_t    s1_qr7_v1;
+    vector_t    s1_qr7_v5;
+    vector_t    s1_qr7_c;
+    vector_t    s1_qr7_v13;
+    vector_t    s1_qr7_t0;
 
     vector_t    s0_qr7_v2;
     vector_t    s0_qr7_v6;
     vector_t    s0_qr7_v10;
     vector_t    s0_qr7_d;
     vector_t    s0_qr7_t1;
+    vector_t    s1_qr7_v2;
+    vector_t    s1_qr7_v6;
+    vector_t    s1_qr7_v10;
+    vector_t    s1_qr7_d;
+    vector_t    s1_qr7_t1;
 
     vector_t    s0_qr7_a;
     vector_t    s0_qr7_v7;
     vector_t    s0_qr7_v11;
     vector_t    s0_qr7_v15;
     vector_t    s0_qr7_e;
+    vector_t    s1_qr7_a;
+    vector_t    s1_qr7_v7;
+    vector_t    s1_qr7_v11;
+    vector_t    s1_qr7_v15;
+    vector_t    s1_qr7_e;
 
-    // Init/Fin and Payload.
-    stream_cipher_t         stream_cipher_s0;
+    // Init/Fin and Payloads.
+    line_t      s0_finit_line0;
+    line_t      s1_finit_line0;
+    line_t      s0_finit_line1;
+    line_t      s1_finit_line1;
+    line_t      s0_finit_line2;
+    line_t      s1_finit_line2;
+    line_t      s0_finit_line3;
+    line_t      s1_finit_line3;
+
+    stream_payload_t        stream_payload_b1;
     stream_payload_t        stream_payload_b0;
 }
 
     /******  G L O B A L   I N G R E S S   M E T A D A T A  *********/
 
 struct my_ingress_metadata_t {
-    bit<1>      fin;
-    bit<3>      relative_qr;
-    bit<1>      recirculation; //helps to choose what port use for recirculation at qr_r0 and qr_r1
+    bit<1>      fin; // round bit [7:7]
+    bit<3>      relative_qr; // round bits [2:0]. Max QRs = 64
     hashword_t  s0_a; //used to update two elements of the state matrix in the same stage (i11_qr)
+    hashword_t  s1_a; //used to update two elements of the state matrix in the same stage (i11_qr)
 }
 
     /***********************  P A R S E R  **************************/
@@ -113,6 +166,14 @@ control Ingress(
         if (!hdr.stream_round.isValid() || meta.fin == 1) {
             tbl_stream_ig0_finit.apply();
             tbl_stream_ig1_finit.apply();
+            tbl_stream_ig2_finit.apply();
+            tbl_stream_ig3_finit.apply();
+            tbl_stream_ig4_finit.apply();
+            tbl_stream_ig5_finit.apply();
+            tbl_stream_ig6_finit.apply();
+            tbl_stream_ig7_finit.apply();
+            tbl_stream_ig8_finit.apply();
+            tbl_stream_ig9_finit.apply();
         } else {
             tbl_stream_ig0.apply();
             tbl_stream_ig1.apply();
