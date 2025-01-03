@@ -52,21 +52,6 @@ action i0_add_values_forro(
    hdr.s1_finit_line1.d = hdr.s1_finit_line1.d + FORRO_C3; //v15 = C3
 }
 
-action i1_cipher_two_block () {
-   // hdr.stream_payload_b0.v0  = hdr.stream_payload_b0.v0  ^ hdr.s0_finit_line0.a;
-   // hdr.stream_payload_b0.v1  = hdr.stream_payload_b0.v1  ^ hdr.s0_finit_line1.a;
-   // hdr.stream_payload_b1.v0  = hdr.stream_payload_b1.v0  ^ hdr.s1_finit_line0.a;
-   // hdr.stream_payload_b1.v1  = hdr.stream_payload_b1.v1  ^ hdr.s1_finit_line1.a;   
-
-   //DEBUG
-   // Setting header back to INIT for next switch
-   hdr.ethernet.ether_type = ether_type_t.STREAM_INIT;
-
-   // Setting Egress port and skipping egress Pipeline
-   ig_tm_md.ucast_egress_port = 0x1;
-   ig_tm_md.bypass_egress = 0x1;
-}
-
 action i1_init() {
    // Changing ethertype and sending to Egress to process QR0
    hdr.ethernet.ether_type = ether_type_t.STREAM_CALC;
@@ -76,56 +61,54 @@ action i1_init() {
    exit;
 }
 
-action i2_cipher_two_block () {
-   hdr.stream_payload_b0.v2  = hdr.stream_payload_b0.v2  ^ hdr.s0_finit_line2.a;
-   hdr.stream_payload_b0.v3  = hdr.stream_payload_b0.v3  ^ hdr.s0_finit_line3.a;
-   hdr.stream_payload_b1.v2  = hdr.stream_payload_b1.v2  ^ hdr.s1_finit_line2.a;
-   hdr.stream_payload_b1.v3  = hdr.stream_payload_b1.v3  ^ hdr.s1_finit_line3.a;
-}
-
-action i3_cipher_two_block () {
-   hdr.stream_payload_b0.v4  = hdr.stream_payload_b0.v4  ^ hdr.s0_finit_line0.b;
-   hdr.stream_payload_b0.v5  = hdr.stream_payload_b0.v5  ^ hdr.s0_finit_line1.b;
+action i1_cipher() {
+   hdr.stream_payload_b1.v0  = hdr.stream_payload_b1.v0  ^ hdr.s1_finit_line0.a;
    hdr.stream_payload_b1.v4  = hdr.stream_payload_b1.v4  ^ hdr.s1_finit_line0.b;
-   hdr.stream_payload_b1.v5  = hdr.stream_payload_b1.v5  ^ hdr.s1_finit_line1.b;
-}
-
-action i4_cipher_two_block () {
-   hdr.stream_payload_b0.v6  = hdr.stream_payload_b0.v6  ^ hdr.s0_finit_line2.b;
-   hdr.stream_payload_b0.v7  = hdr.stream_payload_b0.v7  ^ hdr.s0_finit_line3.b;
-   hdr.stream_payload_b1.v6  = hdr.stream_payload_b1.v6  ^ hdr.s1_finit_line2.b;
-   hdr.stream_payload_b1.v7  = hdr.stream_payload_b1.v7  ^ hdr.s1_finit_line3.b;
-}
-
-action i5_cipher_two_block () {
-   hdr.stream_payload_b0.v8  = hdr.stream_payload_b0.v8  ^ hdr.s0_finit_line0.c;
-   hdr.stream_payload_b0.v9  = hdr.stream_payload_b0.v9  ^ hdr.s0_finit_line1.c;
    hdr.stream_payload_b1.v8  = hdr.stream_payload_b1.v8  ^ hdr.s1_finit_line0.c;
-   hdr.stream_payload_b1.v9  = hdr.stream_payload_b1.v9  ^ hdr.s1_finit_line1.c;
-}
-
-action i6_cipher_two_block () {
-   hdr.stream_payload_b0.v10 = hdr.stream_payload_b0.v10 ^ hdr.s0_finit_line2.c;
-   hdr.stream_payload_b0.v11 = hdr.stream_payload_b0.v11 ^ hdr.s0_finit_line3.c;
-   hdr.stream_payload_b1.v10 = hdr.stream_payload_b1.v10 ^ hdr.s1_finit_line2.c;
-   hdr.stream_payload_b1.v11 = hdr.stream_payload_b1.v11 ^ hdr.s1_finit_line3.c;
-}
-
-action i7_cipher_two_block () {
-   hdr.stream_payload_b0.v12 = hdr.stream_payload_b0.v12 ^ hdr.s0_finit_line0.d;
-   hdr.stream_payload_b0.v13 = hdr.stream_payload_b0.v13 ^ hdr.s0_finit_line1.d;
    hdr.stream_payload_b1.v12 = hdr.stream_payload_b1.v12 ^ hdr.s1_finit_line0.d;
-   hdr.stream_payload_b1.v13 = hdr.stream_payload_b1.v13 ^ hdr.s1_finit_line1.d;
+   
+   hdr.s1_finit_line0.setInvalid();
 }
 
-action i8_cipher_two_block () {
-   hdr.stream_payload_b0.v14 = hdr.stream_payload_b0.v14 ^ hdr.s0_finit_line2.d;
-   hdr.stream_payload_b0.v15 = hdr.stream_payload_b0.v15 ^ hdr.s0_finit_line3.d;
-   hdr.stream_payload_b1.v14 = hdr.stream_payload_b1.v14 ^ hdr.s1_finit_line2.d;
-   hdr.stream_payload_b1.v15 = hdr.stream_payload_b1.v15 ^ hdr.s1_finit_line3.d;
+action i2_cipher() {
+   hdr.stream_payload_b1.v3  = hdr.stream_payload_b1.v3  ^ hdr.s1_finit_line1.a;
+   hdr.stream_payload_b1.v7  = hdr.stream_payload_b1.v7  ^ hdr.s1_finit_line1.b;
+   hdr.stream_payload_b1.v11 = hdr.stream_payload_b1.v11 ^ hdr.s1_finit_line1.c;
+   hdr.stream_payload_b1.v15 = hdr.stream_payload_b1.v15 ^ hdr.s1_finit_line1.d;
+   
+   hdr.s1_finit_line1.setInvalid();
 }
 
-action i9_cipher_two_block () {   
+action i3_cipher() {
+   hdr.stream_payload_b1.v1  = hdr.stream_payload_b1.v1  ^ hdr.s1_finit_line2.a;   
+   hdr.stream_payload_b1.v5  = hdr.stream_payload_b1.v5  ^ hdr.s1_finit_line2.b;
+   hdr.stream_payload_b1.v9  = hdr.stream_payload_b1.v9  ^ hdr.s1_finit_line2.c;
+   hdr.stream_payload_b1.v13 = hdr.stream_payload_b1.v13 ^ hdr.s1_finit_line2.d;
+   
+   hdr.s1_finit_line2.setInvalid();
+}
+
+action i4_cipher() {
+   hdr.stream_payload_b1.v2  = hdr.stream_payload_b1.v2  ^ hdr.s1_finit_line3.a;
+   hdr.stream_payload_b1.v6  = hdr.stream_payload_b1.v6  ^ hdr.s1_finit_line3.b;
+   hdr.stream_payload_b1.v10 = hdr.stream_payload_b1.v10 ^ hdr.s1_finit_line3.c;
+   hdr.stream_payload_b1.v14 = hdr.stream_payload_b1.v14 ^ hdr.s1_finit_line3.d;
+   
+   hdr.s1_finit_line3.setInvalid();
+}
+
+action i5_cipher_recirculate_block() {
+   // Setting header to FIN to cipher the last block
+   hdr.ethernet.ether_type = ether_type_t.STREAM_FIN;
+
+   // Setting recirculation and skipping egress Pipeline
+   ig_tm_md.ucast_egress_port = 68;
+   ig_tm_md.bypass_egress = 0x1;
+
+   exit;
+}
+
+action i5_cipher_send() {
    // Setting header back to INIT for next switch
    hdr.ethernet.ether_type = ether_type_t.STREAM_INIT;
 
@@ -133,15 +116,8 @@ action i9_cipher_two_block () {
    ig_tm_md.ucast_egress_port = 0x1;
    ig_tm_md.bypass_egress = 0x1;
 
-   // Cleaning state and round control headers to send to the network
+   // Cleaning round control headers to send to the network
    hdr.stream_round.setInvalid();
-   hdr.s0_finit_line0.setInvalid();
-   hdr.s1_finit_line0.setInvalid();
-   hdr.s0_finit_line1.setInvalid();
-   hdr.s1_finit_line1.setInvalid();
-   hdr.s0_finit_line2.setInvalid();
-   hdr.s1_finit_line2.setInvalid();
-   hdr.s0_finit_line3.setInvalid();
-   hdr.s1_finit_line3.setInvalid();
+
    exit;
 }

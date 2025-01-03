@@ -13,4 +13,5 @@ enum bit<16> ether_type_t {
     MPLS = 0x8847,
     STREAM_CALC = 0xABCC,
     STREAM_INIT = 0xABCD,
+    STREAM_FIN  = 0xABCE,
 }

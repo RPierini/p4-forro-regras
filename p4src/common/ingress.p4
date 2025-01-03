@@ -145,16 +145,14 @@ control Ingress(
 
     apply {
         if (!hdr.stream_round.isValid() || hdr.stream_round.round[7:7] == 1) {
-            tbl_stream_ig0_finit.apply();
+            if (hdr.ethernet.ether_type != ether_type_t.STREAM_FIN) {
+                tbl_stream_ig0_finit.apply();
+            }
             tbl_stream_ig1_finit.apply();
-            // tbl_stream_ig2_finit.apply();
-            // tbl_stream_ig3_finit.apply();
-            // tbl_stream_ig4_finit.apply();
-            // tbl_stream_ig5_finit.apply();
-            // tbl_stream_ig6_finit.apply();
-            // tbl_stream_ig7_finit.apply();
-            // tbl_stream_ig8_finit.apply();
-            // tbl_stream_ig9_finit.apply();
+            tbl_stream_ig2_finit.apply();
+            tbl_stream_ig3_finit.apply();
+            tbl_stream_ig4_finit.apply();
+            tbl_stream_ig5_finit.apply();
         } else {
             tbl_stream_ig0.apply();
             tbl_stream_ig1.apply();

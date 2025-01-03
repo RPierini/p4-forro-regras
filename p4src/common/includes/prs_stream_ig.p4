@@ -9,7 +9,7 @@ state parse_stream_round_nonce {
         (0, 3): parse_qr3;
         (0, 5): parse_qr15;
         (0, 7): parse_qr7;
-        (1, 7): parse_stream_cipher; // finalization
+        (1, 7): parse_stream_first_cipher; // finalization
         default: accept;
     }
 }
@@ -111,7 +111,7 @@ state parse_qr7 {
     transition accept;
 }
 
-state parse_stream_cipher {
+state parse_stream_first_cipher {
     pkt.extract(hdr.s0_finit_line0);
     pkt.extract(hdr.s1_finit_line0);
     pkt.extract(hdr.s0_finit_line1);
@@ -120,13 +120,18 @@ state parse_stream_cipher {
     pkt.extract(hdr.s1_finit_line2);
     pkt.extract(hdr.s0_finit_line3);
     pkt.extract(hdr.s1_finit_line3);
-    transition select(hdr.stream_round.round[7:7]) {
-        0: accept;
-        1: parse_stream_payload;
-    }
+    pkt.extract(hdr.stream_payload_b0);
+    pkt.extract(hdr.stream_payload_b1);
+    transition accept;
 }
 
-state parse_stream_payload {
+state parse_stream_second_cipher {
+    pkt.extract(hdr.stream_round);
+    pkt.extract(hdr.stream_nonce);
+    pkt.extract(hdr.s1_finit_line0);
+    pkt.extract(hdr.s1_finit_line1);
+    pkt.extract(hdr.s1_finit_line2);
+    pkt.extract(hdr.s1_finit_line3);
     pkt.extract(hdr.stream_payload_b0);
     pkt.extract(hdr.stream_payload_b1);
     transition accept;

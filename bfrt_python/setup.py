@@ -37,7 +37,7 @@ def clear_all(verbose=True, batching=True):
                 if verbose:
                     print('Done')
                     
-clear_all(verbose=True)
+# clear_all(verbose=True)
 
 pipeline = "Ingress"
 table = "ig"
@@ -72,16 +72,5 @@ p4.Ingress.tbl_stream_ig11.add_with_i11_qr7_fin(round=(total_rounds-1))
 ## Trilha de finalizacao
 # Regras por dispositivo
 p4.Ingress.tbl_stream_ig0_finit.add_with_i0_add_values_forro(src_addr=0x080000000101, key0=0x34333231, key1=0x34333231, key2=0x34333231, key3=0x34333231, key4=0x34333231, key5=0x34333231, key6=0x34333231, key7=0x34333231)
-
-# Regras padrao
-p4.Ingress.tbl_stream_ig1_finit.add_with_i1_cipher_two_block(round_7_7_=1)
-# p4.Ingress.tbl_stream_ig2_finit.add_with_i2_cipher_two_block(round_7_7_=1)
-# p4.Ingress.tbl_stream_ig3_finit.add_with_i3_cipher_two_block(round_7_7_=1)
-# p4.Ingress.tbl_stream_ig4_finit.add_with_i4_cipher_two_block(round_7_7_=1)
-# p4.Ingress.tbl_stream_ig5_finit.add_with_i5_cipher_two_block(round_7_7_=1)
-# p4.Ingress.tbl_stream_ig6_finit.add_with_i6_cipher_two_block(round_7_7_=1)
-# p4.Ingress.tbl_stream_ig7_finit.add_with_i7_cipher_two_block(round_7_7_=1)
-# p4.Ingress.tbl_stream_ig8_finit.add_with_i8_cipher_two_block(round_7_7_=1)
-# p4.Ingress.tbl_stream_ig9_finit.add_with_i9_cipher_two_block(round_7_7_=1)
 
 bfrt.complete_operations()

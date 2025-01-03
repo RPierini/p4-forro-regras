@@ -23,6 +23,7 @@ parser IngressParser(packet_in        pkt,
         transition select(hdr.ethernet.ether_type) {
             ether_type_t.STREAM_INIT:    parse_stream_nonce;
             ether_type_t.STREAM_CALC:    parse_stream_round_nonce;
+            ether_type_t.STREAM_FIN:     parse_stream_second_cipher;
             default: accept;
         }
     }
