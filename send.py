@@ -50,8 +50,12 @@ def main():
     #Carregando argumentos, ja invertendo o Endianess do nonce, key e mensagem
     addr = socket.gethostbyname(sys.argv[1])
     nonce = swap32(padding(sys.argv[2], 8))
-    payload1 = swap32(padding(sys.argv[3], 64))
-    payload2 = swap32(padding(sys.argv[4], 64))
+    if sys.argv[5] == 1:
+        payload1 = swap32(bytes.fromhex(sys.argv[3]))
+        payload2 = swap32(bytes.fromhex(sys.argv[4]))
+    else:
+        payload1 = swap32(padding(sys.argv[3], 64))
+        payload2 = swap32(padding(sys.argv[4], 64))
     iface = get_if()
     
     # print(payload)
