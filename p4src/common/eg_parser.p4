@@ -16,8 +16,7 @@ parser EgressParser(packet_in        pkt,
     state parse_ethernet {
         pkt.extract(hdr.ethernet);
         transition select(hdr.ethernet.ether_type) {
-            ether_type_t.STREAM_CALC:    parse_stream_nonce_round_state;
-            ether_type_t.STREAM_INIT:    parse_stream_cipher_payload;
+            ether_type_t.STREAM_CALC:    parse_stream_round_nonce_state;
             default: accept;
         }
     }

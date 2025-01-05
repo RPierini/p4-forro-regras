@@ -8,16 +8,14 @@
 
 struct my_egress_headers_t {
     ethernet_h              ethernet;
+    stream_control_t        stream_control;
     stream_round_t          stream_round;
     stream_nonce_t          stream_nonce;
 
     //QR 0, 2, 4 and 6
     line_t                  s0_line2;
-    line_t                  s1_line2;
     line_t                  s0_line0;
-    line_t                  s1_line0;
     line_t                  s0_line1;
-    line_t                  s1_line1;
 
     //Cipher
     line_t      s0_finit_line0;
@@ -50,8 +48,6 @@ control Egress(
     inout egress_intrinsic_metadata_for_deparser_t     eg_dprsr_md,
     inout egress_intrinsic_metadata_for_output_port_t  eg_oport_md)
 {
-
-    // Hash<bit<32>>(HashAlgorithm_t.IDENTITY) copy32_0;
     #include "includes/act_stream_eg_qr.p4"
     #include "includes/tbl_stream_eg.p4"
 

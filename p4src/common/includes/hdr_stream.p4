@@ -3,8 +3,12 @@ header stream_nonce_t {
     hashword_t  n1;
 }
 
+header stream_control_t {
+    bit<8>  control_flags; //1b: has_round_header, 2b: stream_cipher (00: forro, 01: chacha, 10: xote, 11: chacha_2state), 5b: block_counter
+}
+
 header stream_round_t {
-    bit<8>  round;
+    bit<8>  round; //1b: fin, 7b: round counter
 }
 
 // each hashword from the state vector
@@ -25,37 +29,21 @@ header stream_cipher_t {
     hashword_t  s0_v4;
     hashword_t  s0_v8;
     hashword_t  s0_v12;
-    hashword_t  s1_v0;
-    hashword_t  s1_v4;
-    hashword_t  s1_v8;
-    hashword_t  s1_v12;
 
     hashword_t  s0_v3;
     hashword_t  s0_v7;
     hashword_t  s0_v11;
     hashword_t  s0_v15;
-    hashword_t  s1_v3;
-    hashword_t  s1_v7;
-    hashword_t  s1_v11;
-    hashword_t  s1_v15;
 
     hashword_t  s0_v1;
     hashword_t  s0_v5;
     hashword_t  s0_v9;
     hashword_t  s0_v13;
-    hashword_t  s1_v1;
-    hashword_t  s1_v5;
-    hashword_t  s1_v9;
-    hashword_t  s1_v13;
 
     hashword_t  s0_v2;
     hashword_t  s0_v6;
     hashword_t  s0_v10;
     hashword_t  s0_v14;
-    hashword_t  s1_v2;
-    hashword_t  s1_v6;
-    hashword_t  s1_v10;
-    hashword_t  s1_v14;
 }
 
 header stream_payload_t {

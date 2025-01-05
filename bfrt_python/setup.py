@@ -74,4 +74,8 @@ p4.Ingress.tbl_stream_ig11.add_with_i11_qr7_fin(round=(total_rounds-1))
 p4.Ingress.tbl_stream_ig0_finit.add_with_i0_add_values_forro(src_addr=0x080000000101, key0=0x34333231, key1=0x34333231, key2=0x34333231, key3=0x34333231, key4=0x34333231, key5=0x34333231, key6=0x34333231, key7=0x34333231)
 #p4.Ingress.tbl_stream_ig0_finit.add_with_i0_add_values_forro(src_addr=0x080000000101, key0=0x34333231, key1=0x35343332, key2=0x36353433, key3=0x37363534, key4=0x38373635, key5=0x39383736, key6=0x30393837, key7=0x31323334)
 
+# Para o Mac final 01:01 no algoritmo Forro: cifrar 2 blocos (até o bloco "1") e mandar pela porta "1"
+p4.Ingress.tbl_stream_ig1_finit.add_with_i1_cipher(round_7_7_=0x1)
+p4.Ingress.tbl_stream_ig2_finit.add_with_i2_send(src_addr=0x080000000101, control_flags=0b00000001, port=1)
+
 bfrt.complete_operations()
