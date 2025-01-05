@@ -16,8 +16,8 @@ enum bit<16> ether_type_t {
 }
 
 enum bit<2> cipher_type_t {
-    FORRO = 0x0,
+    UNDEFINED = 0x0,
     CHACHA = 0x1,
-    XOTE = 0x2,
-    CHACHA_2STATE = 0x3,
+    FORRO = 0x2,
+    XOTE = 0x3,
 }

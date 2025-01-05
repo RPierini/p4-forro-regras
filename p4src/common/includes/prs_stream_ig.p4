@@ -9,18 +9,43 @@ state parse_stream_control {
 state parse_stream_round_nonce {
     pkt.extract(hdr.stream_round);
     pkt.extract(hdr.stream_nonce);
-    transition select(hdr.stream_round.round[7:7], hdr.stream_round.round[2:0]) {
-        (0, 1): parse_qr15;
-        (0, 3): parse_qr3;
-        (0, 5): parse_qr15;
-        (0, 7): parse_qr7;
-        (1, 7): parse_stream_cipher; // finalization
+    transition select(hdr.stream_round.round[7:7], hdr.stream_round.round[2:0], hdr.stream_control.control_flags[6:6]) {
+        (0, 1, 1): parse_qr15;
+        (0, 3, 1): parse_qr3;
+        (0, 5, 1): parse_qr15;
+        (0, 7, 1): parse_qr7;
+        (0, _, 0): parse_qr_chacha; // ChaCha
+        (1, _, 0): parse_stream_cipher; // ChaCha
+        (1, 7, 1): parse_stream_cipher; // finalization
         default: accept;
     }
 }
 
 state parse_stream_nonce {
     pkt.extract(hdr.stream_nonce);
+    transition accept;
+}
+
+state parse_qr_chacha {
+    pkt.extract(hdr.qr_chacha_v1);
+    pkt.extract(hdr.qr_chacha_v5);
+    pkt.extract(hdr.qr_chacha_v9);
+    pkt.extract(hdr.qr_chacha_v13);
+
+    pkt.extract(hdr.qr_chacha_v0);
+    pkt.extract(hdr.qr_chacha_v4);
+    pkt.extract(hdr.qr_chacha_v8);
+    pkt.extract(hdr.qr_chacha_v12);
+    
+    pkt.extract(hdr.qr_chacha_v3);
+    pkt.extract(hdr.qr_chacha_v7);
+    pkt.extract(hdr.qr_chacha_v11);
+    pkt.extract(hdr.qr_chacha_v15);
+
+    pkt.extract(hdr.qr_chacha_v2);
+    pkt.extract(hdr.qr_chacha_v6);
+    pkt.extract(hdr.qr_chacha_v10);
+    pkt.extract(hdr.qr_chacha_v14);
     transition accept;
 }
 

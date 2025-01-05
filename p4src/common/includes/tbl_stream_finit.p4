@@ -3,7 +3,7 @@ table tbl_stream_ig0_finit {
         hdr.ethernet.src_addr:   exact;
     }
     actions = {
-        i0_add_values_forro;
+        i0_add_values_chacha;
         drop;
     }
     size = 192; //Number of source devices

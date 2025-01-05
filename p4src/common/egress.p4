@@ -12,19 +12,11 @@ struct my_egress_headers_t {
     stream_round_t          stream_round;
     stream_nonce_t          stream_nonce;
 
-    //QR 0, 2, 4 and 6
+    //QR 0, 2, 4 and 6 Forro
     line_t                  s0_line2;
     line_t                  s0_line0;
     line_t                  s0_line1;
-
-    //Cipher
-    line_t      s0_finit_line0;
-    line_t      s0_finit_line1;
-    line_t      s0_finit_line2;
-
-    line_t      s0_payload_line0;
-    line_t      s0_payload_line1;
-    line_t      s0_payload_line2;
+    line_t                  s0_line3;
 }
 
     /********  G L O B A L   E G R E S S   M E T A D A T A  *********/

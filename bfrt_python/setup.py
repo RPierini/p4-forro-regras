@@ -1,7 +1,7 @@
 #Versão do Forro
 forro = 8
 #Total rounds (ou total de travessias)
-total_rounds = (forro * 4)
+total_rounds = (forro * 1)
 #Portas de entrada e saida
 ##TOFINO222
 #Cavium: 136
@@ -37,7 +37,7 @@ def clear_all(verbose=True, batching=True):
                 if verbose:
                     print('Done')
                     
-# clear_all(verbose=True)
+clear_all(verbose=True)
 
 pipeline = "Ingress"
 table = "ig"
@@ -49,10 +49,12 @@ for round in range(0, total_rounds):
         continue
 
     #O QR a ser executado na travessia varia de 0 a 7, pares no Ingress e Ímpares no Egress
-    qr = (round) % 8
+    # qr = (round) % 8
 
-    if qr == 1 or qr == 5:
-            qr = 15
+    # if qr == 1 or qr == 5:
+    #         qr = 15
+
+    qr = ""
 
     #Último QR tem uma ação específicas para a finalizacao, estágio 11
     if round == (total_rounds-1):
@@ -62,20 +64,27 @@ for round in range(0, total_rounds):
 
     #Gerando codigo python para inserir registro na tabela
     for i in range(0, limit):
-        code = f"p4.{pipeline}.tbl_stream_{table}{i}.add_with_{action}{i}_qr{qr}(round={round})"
+        code = f"p4.{pipeline}.tbl_stream_{table}{i}.add_with_{action}{i}_qr{qr}_chacha(round={round})"
         exec(code)
         #print(code)
 
 #Inserindo regra para encaminhar para finalizacao
-p4.Ingress.tbl_stream_ig11.add_with_i11_qr7_fin(round=(total_rounds-1))
+p4.Ingress.tbl_stream_ig11.add_with_i11_qr_chacha_fin(round=(total_rounds-1))
 
 ## Trilha de finalizacao
+
+# Regra padrão
+p4.Ingress.tbl_stream_ig1_finit.add_with_i1_cipher(round_7_7_=0x1)
+
 # Regras por dispositivo
-p4.Ingress.tbl_stream_ig0_finit.add_with_i0_add_values_forro(src_addr=0x080000000101, key0=0x34333231, key1=0x34333231, key2=0x34333231, key3=0x34333231, key4=0x34333231, key5=0x34333231, key6=0x34333231, key7=0x34333231)
+#p4.Ingress.tbl_stream_ig0_finit.add_with_i0_add_values_chacha(src_addr=0x080000000101, key0=0x34333231, key1=0x34333231, key2=0x34333231, key3=0x34333231, key4=0x34333231, key5=0x34333231, key6=0x34333231, key7=0x34333231)
+p4.Ingress.tbl_stream_ig0_finit.add_with_i0_add_values_chacha(src_addr=0x080000000101, key0=0x0, key1=0x0, key2=0x0, key3=0x0, key4=0x0, key5=0x0, key6=0x0, key7=0x0)
 #p4.Ingress.tbl_stream_ig0_finit.add_with_i0_add_values_forro(src_addr=0x080000000101, key0=0x34333231, key1=0x35343332, key2=0x36353433, key3=0x37363534, key4=0x38373635, key5=0x39383736, key6=0x30393837, key7=0x31323334)
 
 # Para o Mac final 01:01 no algoritmo Forro: cifrar 2 blocos (até o bloco "1") e mandar pela porta "1"
-p4.Ingress.tbl_stream_ig1_finit.add_with_i1_cipher(round_7_7_=0x1)
-p4.Ingress.tbl_stream_ig2_finit.add_with_i2_send(src_addr=0x080000000101, control_flags=0b00000001, port=1)
+p4.Ingress.tbl_stream_ig2_finit.add_with_i2_send(src_addr=0x080000000101, control_flags=0b01000001, port=1)
+
+# Para o Mac final 01:01 no algoritmo ChaCha: cifrar 2 blocos (até o bloco "1") e mandar pela porta "1"
+p4.Ingress.tbl_stream_ig2_finit.add_with_i2_send(src_addr=0x080000000101, control_flags=0b00100001, port=1)
 
 bfrt.complete_operations()

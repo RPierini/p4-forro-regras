@@ -4,7 +4,7 @@ header stream_nonce_t {
 }
 
 header stream_control_t {
-    bit<8>  control_flags; //1b: has_round_header, 2b: stream_cipher (00: forro, 01: chacha, 10: xote, 11: chacha_2state), 5b: block_counter
+    bit<8>  control_flags; //1b: has_round_header, 2b: stream_cipher (00: undefined, 01: chacha, 10: forro, 11: xote), 5b: block_counter
 }
 
 header stream_round_t {

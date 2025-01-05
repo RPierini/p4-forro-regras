@@ -5,5 +5,6 @@ state parse_stream_round_nonce_state {
     pkt.extract(hdr.s0_line0);
     pkt.extract(hdr.s0_line1);
     pkt.extract(hdr.s0_line2);
+    pkt.extract(hdr.s0_line3);
     transition accept;
 }

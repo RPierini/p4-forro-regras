@@ -63,6 +63,28 @@ struct my_ingress_headers_t {
     vector_t    s0_qr7_v10;
     vector_t    s0_qr7_d;
 
+    // QR ChaCha
+
+    vector_t    qr_chacha_v0;
+    vector_t    qr_chacha_v4;
+    vector_t    qr_chacha_v8;
+    vector_t    qr_chacha_v12;
+    
+    vector_t    qr_chacha_v3;
+    vector_t    qr_chacha_v7;
+    vector_t    qr_chacha_v11;
+    vector_t    qr_chacha_v15;
+    
+    vector_t    qr_chacha_v1;
+    vector_t    qr_chacha_v5;
+    vector_t    qr_chacha_v9;
+    vector_t    qr_chacha_v13;
+    
+    vector_t    qr_chacha_v2;
+    vector_t    qr_chacha_v6;
+    vector_t    qr_chacha_v10;
+    vector_t    qr_chacha_v14;
+
     // Init/Fin and Payloads.
     line_t      s0_finit_line0;
     line_t      s0_finit_line1;
@@ -96,9 +118,10 @@ control Ingress(
     Hash<bit<32>>(HashAlgorithm_t.IDENTITY) copy32_0;
     #include "includes/act_utils.p4"
     #include "includes/act_stream_ig_finit.p4"
-    #include "includes/act_stream_ig_qr3.p4"
-    #include "includes/act_stream_ig_qr7.p4"
-    #include "includes/act_stream_ig_qr15.p4"
+    // #include "includes/act_stream_ig_qr3.p4"
+    // #include "includes/act_stream_ig_qr7.p4"
+    // #include "includes/act_stream_ig_qr15.p4"
+    #include "includes/act_stream_ig_qr_chacha.p4"
     #include "includes/tbl_stream_ig.p4"
     #include "includes/tbl_stream_finit.p4"
 
