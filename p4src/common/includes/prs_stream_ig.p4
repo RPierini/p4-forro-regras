@@ -9,14 +9,9 @@ state parse_stream_control {
 state parse_stream_round_nonce {
     pkt.extract(hdr.stream_round);
     pkt.extract(hdr.stream_nonce);
-    transition select(hdr.stream_round.round[7:7], hdr.stream_round.round[2:0], hdr.stream_control.control_flags[6:6]) {
-        (0, 1, 1): parse_qr15;
-        (0, 3, 1): parse_qr3;
-        (0, 5, 1): parse_qr15;
-        (0, 7, 1): parse_qr7;
-        (0, _, 0): parse_qr_chacha; // ChaCha
-        (1, _, 0): parse_stream_cipher; // ChaCha
-        (1, 7, 1): parse_stream_cipher; // finalization
+    transition select(hdr.stream_round.round[7:7], hdr.stream_control.control_flags[6:6]) {
+        (0, 0): parse_qr_chacha; // ChaCha
+        (1, 0): parse_stream_cipher; // ChaCha
         default: accept;
     }
 }
@@ -46,62 +41,6 @@ state parse_qr_chacha {
     pkt.extract(hdr.qr_chacha_v6);
     pkt.extract(hdr.qr_chacha_v10);
     pkt.extract(hdr.qr_chacha_v14);
-    transition accept;
-}
-
-state parse_qr15 {
-    pkt.extract(hdr.s0_qr15_line0);
-    pkt.extract(hdr.s0_qr15_line1);
-    pkt.extract(hdr.s0_qr15_line2);
-    pkt.extract(hdr.s0_qr15_line3);
-    transition accept;
-}
-
-state parse_qr3 {
-    pkt.extract(hdr.s0_qr3_a); //v3
-    pkt.extract(hdr.s0_qr3_b); //v7
-    pkt.extract(hdr.s0_qr3_c); //v11
-    pkt.extract(hdr.s0_qr3_d); //v15
-
-    pkt.extract(hdr.s0_qr3_e); //v2
-    pkt.extract(hdr.s0_qr3_v6);
-    pkt.extract(hdr.s0_qr3_v10);
-    pkt.extract(hdr.s0_qr3_v14);
-    
-    pkt.extract(hdr.s0_qr3_v1);
-    pkt.extract(hdr.s0_qr3_v5);
-    pkt.extract(hdr.s0_qr3_v9);
-    pkt.extract(hdr.s0_qr3_v13);
-
-    pkt.extract(hdr.s0_qr3_v0);
-    pkt.extract(hdr.s0_qr3_v4);
-    pkt.extract(hdr.s0_qr3_v8);
-    pkt.extract(hdr.s0_qr3_v12);
-
-    transition accept;
-}
-
-state parse_qr7 {
-    pkt.extract(hdr.s0_qr7_a); //v3
-    pkt.extract(hdr.s0_qr7_b); //v4
-    pkt.extract(hdr.s0_qr7_c); //v9
-    pkt.extract(hdr.s0_qr7_d); //v14
-
-    pkt.extract(hdr.s0_qr7_e); //v2
-    pkt.extract(hdr.s0_qr7_v7);
-    pkt.extract(hdr.s0_qr7_v8);
-    pkt.extract(hdr.s0_qr7_v13);
-
-    pkt.extract(hdr.s0_qr7_v1);
-    pkt.extract(hdr.s0_qr7_v6);
-    pkt.extract(hdr.s0_qr7_v11);
-    pkt.extract(hdr.s0_qr7_v12);
-
-    pkt.extract(hdr.s0_qr7_v0);
-    pkt.extract(hdr.s0_qr7_v5);
-    pkt.extract(hdr.s0_qr7_v10);
-    pkt.extract(hdr.s0_qr7_v15);
-
     transition accept;
 }
 

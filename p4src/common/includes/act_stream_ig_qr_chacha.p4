@@ -76,14 +76,14 @@ action i10_qr_chacha() {
 }
 
 // Recirculates
-action i11_qr_chacha() {
+action i11_qr_chacha(bit<9> port) {
    hdr.qr_chacha_v4.v = hdr.qr_chacha_v4.v[24:0] ++ hdr.qr_chacha_v4.v[31:25];
    hdr.qr_chacha_v7.v = hdr.qr_chacha_v7.v[24:0] ++ hdr.qr_chacha_v7.v[31:25];
    hdr.qr_chacha_v6.v = hdr.qr_chacha_v6.v[24:0] ++ hdr.qr_chacha_v6.v[31:25];
    hdr.qr_chacha_v5.v = hdr.qr_chacha_v5.v[24:0] ++ hdr.qr_chacha_v5.v[31:25];
 
+   ig_tm_md.ucast_egress_port = port;
    hdr.stream_round.round = hdr.stream_round.round + 1;
-   ig_tm_md.ucast_egress_port=68+128;
 }
 
 //Skips egress and set to finalization

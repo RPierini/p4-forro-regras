@@ -129,5 +129,5 @@ table tbl_stream_ig11 {
         i11_qr_chacha_fin;
     }
     size = 64;
-    default_action = i11_qr_chacha;
+    default_action = i11_qr_chacha(68);
 }

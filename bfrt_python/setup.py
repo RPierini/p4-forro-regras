@@ -57,16 +57,20 @@ for round in range(0, total_rounds):
     qr = ""
 
     #Último QR tem uma ação específicas para a finalizacao, estágio 11
-    if round == (total_rounds-1):
-        limit = 11
-    else:
-        limit = 12
+    limit = 11
 
     #Gerando codigo python para inserir registro na tabela
     for i in range(0, limit):
         code = f"p4.{pipeline}.tbl_stream_{table}{i}.add_with_{action}{i}_qr{qr}_chacha(round={round})"
         exec(code)
         #print(code)
+
+    if not round == total_rounds-1:
+        #Porta alternada de recirculação, a cada duas rodadas pares encaminha para a 196
+        port=68 + (128 * ((round % 4) >> 1))
+
+        code = f"p4.{pipeline}.tbl_stream_{table}11.add_with_{action}11_qr{qr}_chacha(round={round},port={port})"
+        exec(code)
 
 #Inserindo regra para encaminhar para finalizacao
 p4.Ingress.tbl_stream_ig11.add_with_i11_qr_chacha_fin(round=(total_rounds-1))
